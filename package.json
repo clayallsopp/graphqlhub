@@ -17,7 +17,6 @@
     "express-graphql": "0.3.0",
     "graphiql": "0.2.0",
     "graphql": "0.4.4",
-    "hackernews-api": "1.0.0",
     "node-fetch": "1.3.2",
     "react": "0.13.3"
   },
