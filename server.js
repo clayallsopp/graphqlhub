@@ -12,7 +12,10 @@ app.use(function(err, req, res, next) {
   console.error(err.toString());
   console.error(err.stack);
   next(err);
-})
+});
+app.get('/', function (req, res) {
+  res.redirect('/playground');
+});
 
 let PORT = process.env.PORT || 3000;
 let server = app.listen(PORT, () => {
