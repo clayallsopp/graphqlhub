@@ -1571,13 +1571,7 @@ GraphiQL.Logo = (function (_React$Component2) {
       this.props.children || _react2['default'].createElement(
         'span',
         null,
-        'Graph',
-        _react2['default'].createElement(
-          'em',
-          null,
-          'i'
-        ),
-        'QL'
+        'GraphQLHub'
       )
     );
   };
