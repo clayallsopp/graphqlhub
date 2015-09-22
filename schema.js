@@ -8,7 +8,14 @@ import {
 import HN from './schemas/hn';
 
 let FIELDS = {
-  hn : HN
+  hn : HN,
+  graphQLHub : {
+    type : GraphQLString,
+    description : 'About GraphQLHub',
+    resolve() {
+      return 'GraphQLHub is created by Clay Allsopp @clayallsopp. Use it to explore popular APIs with GraphQL!'
+    }
+  }
 };
 
 let schema = new GraphQLSchema({
