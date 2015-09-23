@@ -6,9 +6,11 @@ import {
 } from 'graphql';
 
 import HN from './schemas/hn';
+import REDDIT from './schemas/reddit';
 
 let FIELDS = {
   hn : HN,
+  reddit : REDDIT,
   graphQLHub : {
     type : GraphQLString,
     description : 'About GraphQLHub',
