@@ -52,28 +52,6 @@ let itemTypeEnum = new GraphQLEnumType({
   }
 });
 
-let storyListTypeEnum = new GraphQLEnumType({
-  name : 'StoryListType',
-  description : 'The type of story list',
-  values : {
-    ask : {
-      value : 'ask'
-    },
-    show : {
-      value : 'show'
-    },
-    top : {
-      value : 'top'
-    },
-    jobs : {
-      value : 'jobs'
-    },
-    new : {
-      value : 'new'
-    }
-  }
-})
-
 let itemType = new GraphQLObjectType({
   name : 'HackerNewsItem',
   description : 'Stories, comments, jobs, Ask HNs and even polls are just items. They\'re identified by their ids, which are unique integers',
@@ -295,7 +273,7 @@ let hnType = new GraphQLObjectType({
         },
         storyType : {
           description : 'Type of story to list',
-          type        : new GraphQLNonNull(storyListTypeEnum)
+          type        : new GraphQLNonNull(GraphQLString)
         }
       },
       resolve: function(root, { limit = 30, offset = 0, storyType } = {}) {
