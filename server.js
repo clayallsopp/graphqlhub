@@ -1,5 +1,6 @@
 let express     = require('express');
 let graphqlHTTP = require('express-graphql');
+let cors = require('cors');
 
 let Schema = require('./schema');
 
@@ -7,7 +8,7 @@ import path from 'path';
 
 let app = express();
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/graphql', graphqlHTTP({ schema: Schema }));
+app.use('/graphql', cors(), graphqlHTTP({ schema: Schema }));
 app.get('/', function (req, res) {
   res.redirect('/playground');
 });

@@ -57,8 +57,9 @@ let itemType = new GraphQLObjectType({
   description : 'Stories, comments, jobs, Ask HNs and even polls are just items. They\'re identified by their ids, which are unique integers',
   fields: () => ({
     id : {
-      type : new GraphQLNonNull(GraphQLInt),
-      description : 'The item\'s unique id.'
+      type : new GraphQLNonNull(GraphQLString),
+      description : 'The item\'s unique id.',
+      resolve : (item) => item.id.toString()
     },
     deleted : {
       type : GraphQLBoolean,
