@@ -15,7 +15,7 @@ let FIELDS = {
     type : GraphQLString,
     description : 'About GraphQLHub',
     resolve() {
-      return 'GraphQLHub is created by Clay Allsopp @clayallsopp. Use it to explore popular APIs with GraphQL!'
+      return 'Use GraphQLHub to explore popular APIs with GraphQL! Created by Clay Allsopp @clayallsopp'
     }
   }
 };
