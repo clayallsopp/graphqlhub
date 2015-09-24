@@ -1,0 +1,104 @@
+<!--
+ *  Copyright (c) 2015, Facebook, Inc.
+ *  All rights reserved.
+ *
+ *  This source code is licensed under the license found in the
+ *  LICENSE file in the root directory of this source tree.
+ *
+-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GraphQL Hub</title>
+    <link rel="stylesheet" href="/graphiql.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/0.9.0/fetch.min.js"></script>
+    <script src="/graphiql.js"></script>
+    <script type="text/javascript">
+      window.heap=window.heap||[],heap.load=function(e,t){window.heap.appid=e,window.heap.config=t=t||{};var n=t.forceSSL||"https:"===document.location.protocol,a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src=(n?"https:":"http:")+"//cdn.heapanalytics.com/js/heap-"+e+".js";var o=document.getElementsByTagName("script")[0];o.parentNode.insertBefore(a,o);for(var r=function(e){return function(){heap.push([e].concat(Array.prototype.slice.call(arguments,0)))}},p=["clearEventProperties","identify","setEventProperties","track","unsetEventProperty"],c=0;c<p.length;c++)heap[p[c]]=r(p[c])};
+      heap.load("613512911");
+    </script>
+  </head>
+  <body>
+    Loading...
+    <script>
+
+      /**
+       * This GraphiQL example illustrates how to use some of GraphiQL's props
+       * in order to enable reading and updating the URL parameters, making
+       * link sharing of queries a little bit easier.
+       *
+       * This is only one example of this kind of feature, GraphiQL exposes
+       * various React params to enable interesting integrations.
+       */
+
+      // Parse the search string to get url parameters.
+      var search = window.location.search;
+      if (!search) {
+        window.location.search = '?query=%23%20Hit%20the%20Play%20button%20above!%0A%23%20Hit%20"Docs"%20on%20the%20right%20to%20explore%20the%20API%0A%0A%7B%0A%20%20graphQLHub%0A%20%20hn%20%7B%0A%20%20%20%20topStories(limit%3A%201)%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20url%0A%20%20%20%20%20%20timeISO%0A%20%20%20%20%20%20by%20%7B%0A%20%20%20%20%20%20%20%20id%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20kids(limit%3A%201)%20%7B%0A%20%20%20%20%20%20%20%20timeISO%0A%20%20%20%20%20%20%20%20by%20%7B%0A%20%20%20%20%20%20%20%20%20%20id%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20text%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D';
+      }
+      var parameters = {};
+      search.substr(1).split('&').forEach(function (entry) {
+        var eq = entry.indexOf('=');
+        if (eq >= 0) {
+          parameters[decodeURIComponent(entry.slice(0, eq))] =
+            decodeURIComponent(entry.slice(eq + 1));
+        }
+      });
+
+      // if variables was provided, try to format it.
+      if (parameters.variables) {
+        try {
+          parameters.variables =
+            JSON.stringify(JSON.parse(query.variables), null, 2);
+        } catch (e) {
+          // Do nothing, we want to display the invalid JSON as a string, rather
+          // than present an error.
+        }
+      }
+
+      // When the query and variables string is edited, update the URL bar so
+      // that it can be easily shared
+      function onEditQuery(newQuery) {
+        parameters.query = newQuery;
+        updateURL();
+      }
+
+      function onEditVariables(newVariables) {
+        parameters.variables = newVariables;
+        updateURL();
+      }
+
+      function updateURL() {
+        var newSearch = '?' + Object.keys(parameters).map(function (key) {
+          return encodeURIComponent(key) + '=' +
+            encodeURIComponent(parameters[key]);
+        }).join('&');
+        history.replaceState(null, null, newSearch);
+      }
+
+      // Defines a GraphQL fetcher using the fetch API.
+      function graphQLFetcher(graphQLParams) {
+        return fetch(window.location.origin + '/graphql', {
+          method: 'post',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(graphQLParams),
+        }).then(function (response) {
+          return response.json()
+        });
+      }
+
+      // Render <GraphiQL /> into the body.
+      React.render(
+        React.createElement(GraphiQL, {
+          fetcher: graphQLFetcher,
+          query: parameters.query,
+          variables: parameters.variables,
+          onEditQuery: onEditQuery,
+          onEditVariables: onEditVariables
+        }),
+        document.body
+      );
+    </script>
+  </body>
+</html>
