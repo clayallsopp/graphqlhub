@@ -32,7 +32,7 @@ let getItems = function(ids, { offset, limit }) {
 
 let itemTypeEnum = new GraphQLEnumType({
   name: 'ItemType',
-  description: 'The type of story',
+  description: 'The type of item',
   values: {
     job: {
       value: 'job'
@@ -51,6 +51,28 @@ let itemTypeEnum = new GraphQLEnumType({
     }
   }
 });
+
+let storyListTypeEnum = new GraphQLEnumType({
+  name : 'StoryListType',
+  description : 'The type of story list',
+  values : {
+    ask : {
+      value : 'ask'
+    },
+    show : {
+      value : 'show'
+    },
+    top : {
+      value : 'top'
+    },
+    jobs : {
+      value : 'jobs'
+    },
+    new : {
+      value : 'new'
+    }
+  }
+})
 
 let itemType = new GraphQLObjectType({
   name : 'HackerNewsItem',
@@ -259,6 +281,36 @@ let hnType = new GraphQLObjectType({
     showStories : createBulkType(getShowStoryIds, 'Up to 200 of the Show HN stories'),
     askStories  : createBulkType(getAskStoryIds, 'Up to 200 of the Ask HN stories'),
     jobStories  : createBulkType(getJobStoryIds, 'Up to 200 of the Job stores'),
+    stories : {
+      type : new GraphQLList(itemType),
+      description : 'Return list of stories',
+      args : {
+        limit : {
+          description : 'Number of items to return',
+          type        : GraphQLInt,
+        },
+        offset : {
+          description : 'Initial offset of number of items to return',
+          type        : GraphQLInt,
+        },
+        storyType : {
+          description : 'Type of story to list',
+          type        : new GraphQLNonNull(storyListTypeEnum)
+        }
+      },
+      resolve: function(root, { limit = 30, offset = 0, storyType } = {}) {
+        let bulkAPICall = {
+          top  : getTopStoryIds,
+          show : getShowStoryIds,
+          new  : getNewStoryIds,
+          ask  : getAskStoryIds,
+          job  : getJobStoryIds
+        }[storyType];
+        return bulkAPICall().then((ids) => {
+          return getItems(ids, { limit, offset });
+        });
+      }
+    }
   }
 })
 
