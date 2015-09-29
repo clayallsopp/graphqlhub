@@ -1,12 +1,43 @@
+require('dotenv').load();
+
 let express     = require('express');
 let graphqlHTTP = require('express-graphql');
-let cors = require('cors');
+let cors        = require('cors');
+let fs          = require('fs');
+
+import Handlebars from 'handlebars';
 
 let Schema = require('./schema');
 
 import path from 'path';
 
+let IS_PROD = (process.env.NODE_ENV === 'production');
+let CDN = {
+  react : 'https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.min.js',
+  fetch : 'https://cdnjs.cloudflare.com/ajax/libs/fetch/0.9.0/fetch.min.js',
+};
+
+let CONSTANTS = {
+  heapId    : process.env.HEAP_ID,
+  reactPath : (IS_PROD ? CDN.react : '/react.js'),
+  fetchPath : (IS_PROD ? CDN.fetch : '/fetch.js')
+};
+
+let compileFile = function(filePath) {
+  let fileString = fs.readFileSync(filePath, "utf8");
+  return Handlebars.compile(fileString)({ CONSTANTS });
+};
+
+let PLAYGROUND = compileFile(path.join(__dirname, 'public', 'playground', 'index.html'));
+let INDEX      = compileFile(path.join(__dirname, 'public', 'index.html'));
+
 let app = express();
+app.get('/playground', function(req, res) {
+  res.write(PLAYGROUND);
+});
+app.get('/', function(req, res) {
+  res.write(INDEX);
+});
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/graphql', cors(), graphqlHTTP({ schema: Schema }));
 app.get('/playground/reddit', function (req, res) {
