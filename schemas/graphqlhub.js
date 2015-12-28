@@ -7,10 +7,12 @@ import {
 
 import { Schema as HN } from './hn';
 import { Schema as REDDIT } from './reddit';
+import { Schema as KEYVALUE } from './keyvalue';
 
 let FIELDS = {
-  hn : HN,
-  reddit : REDDIT,
+  hn : HN.query,
+  reddit : REDDIT.query,
+  keyValue : KEYVALUE.query,
   graphQLHub : {
     type : GraphQLString,
     description : 'About GraphQLHub',
@@ -20,10 +22,19 @@ let FIELDS = {
   }
 };
 
+let MUTATION_FIELDS = {
+  keyValue : KEYVALUE.mutation,
+};
+
 export let Schema = new GraphQLSchema({
   query: new GraphQLObjectType({
     name   : 'GraphQLHubAPI',
     description : 'APIs exposed as GraphQL',
-    fields : () => FIELDS
-  })
+    fields : () => FIELDS,
+  }),
+  mutation: new GraphQLObjectType({
+    name : 'GraphQLHubMutationAPI',
+    description : 'APIs exposed as GraphQL mutations',
+    fields : () => MUTATION_FIELDS,
+  }),
 });
