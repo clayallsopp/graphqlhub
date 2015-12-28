@@ -5,9 +5,7 @@
   "main": "entrypoint.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "DEBUG=express:* ./node_modules/.bin/forever --watch --watchDirectory ./ entrypoint.js",
-    "prestart": "npm run build",
-    "build": ". build.sh"
+    "start": "DEBUG=express:* ./node_modules/.bin/forever --watch --watchDirectory ./ entrypoint.js"
   },
   "author": "Clay Allsopp <clay.allsopp@gmail.com>",
   "license": "MIT",
