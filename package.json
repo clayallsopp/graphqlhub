@@ -4,7 +4,7 @@
   "description": "GraphQLHub.com",
   "main": "entrypoint.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node test.js",
     "start": "DEBUG=express:* ./node_modules/.bin/forever --watch --watchDirectory ./ entrypoint.js"
   },
   "author": "Clay Allsopp <clay.allsopp@gmail.com>",
@@ -25,7 +25,9 @@
   },
   "devDependencies": {
     "forever": "0.15.1",
-    "sane": "1.2.0"
+    "glob": "6.0.2",
+    "sane": "1.2.0",
+    "tape": "4.4.0"
   },
   "engines": {
     "node": "4.1.0",
