@@ -1,4 +1,4 @@
-# GraphQLHub Server
+# GraphQLHub Server [![Build Status](https://travis-ci.org/clayallsopp/graphqlhub.svg)](https://travis-ci.org/clayallsopp/graphqlhub)
 
 This powers the server behind [GraphQLHub](http://www.graphqlhub.com/). It's basically:
 
