@@ -13,5 +13,9 @@ This powers the server behind [GraphQLHub](http://www.graphqlhub.com/). It's bas
 
 ## TODO
 
+- Better visual design
 - Add more APIs!
 - Extract the schemas into their own repo, so others can easily drop them into their own projects
+- Use GraphiQL from NPM, not the vendoring thing done now
+
+PRs for anything above would be excellent!
