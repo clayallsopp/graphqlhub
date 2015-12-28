@@ -1,3 +1,8 @@
 language: node_js
 node_js:
-  - "4.1"
+- '4.1'
+deploy:
+  provider: heroku
+  api_key:
+    secure: szhg+pTuFpxSAZEtNbGIue+ITt+F1QDfOIaK9iw4QHGKcrFrgQkXGDADSgHot4P01kQ6KpuOBw1Ryx3ce2ithebhl55zdaMXQfkKlh9vGSEO05R0yyY7SM6UUJWGebXIzZFf8G/vTbJh+jdyeBuvJ0uiDErIrKNctA5E5XFbXKWTSo3n5EDYYGEx1E89IkZX+Txs98xTfLdIZkQYG6JSF08KF6asPAbpBNXSyo8zGtXPEuB3t3pccPaHwnzSnVS4Ljhujtl6H4DmY+AnkCJpW4Tb0HAnqBX+kGnSoYyv3fG80qABkE1tUvjNzGInc0BMLFI6LrhUrLRRf8Spd4LR//tn6Wy2xLm0tsmLWHz+bE9WyopooLyWamUQRW1YUXdfRiw5CM1q5TTWii/cvdWzuuX1XBXM4FKX5LdON+hbdg/gciLQZMVyzllM7+58SNdyNiYQXObi7ioWVV6UUwv/+P++F2CwDncnjRXCUmx5ZRe8T9UnmTa5xg+YsyKcEHKz1ms9TZoQxKro4YJAxLRsn4gQd9+Sbe1WZeiQfv/JSV98VJujiCbVO8iSWMAW7Le7NxTy/Gih2u3Z13LteLSz4KF5LPAoSLO/2KDTEsZwl9uyjblGi2sVIbvkTd0P0SnAz03k73YG4qXN4R7/h3RnIl1OCk8eRGAF6eSCFpXQtjQ=
+  app: graphqlhub
