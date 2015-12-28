@@ -350,11 +350,9 @@ let redditType = new GraphQLObjectType({
   }
 });
 
-let SCHEMA = {
+export const Schema = {
   type : redditType,
   resolve() {
     return {};
   }
 };
-
-module.exports = SCHEMA;

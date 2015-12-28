@@ -292,11 +292,9 @@ let hnType = new GraphQLObjectType({
   }
 })
 
-let SCHEMA = {
+export const Schema = {
   type : hnType,
   resolve() {
     return {};
   }
 };
-
-module.exports = SCHEMA;

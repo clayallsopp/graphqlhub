@@ -5,8 +5,8 @@ import {
   GraphQLString
 } from 'graphql';
 
-import HN from './schemas/hn';
-import REDDIT from './schemas/reddit';
+import { Schema as HN } from './hn';
+import { Schema as REDDIT } from './reddit';
 
 let FIELDS = {
   hn : HN,
@@ -20,12 +20,10 @@ let FIELDS = {
   }
 };
 
-let schema = new GraphQLSchema({
+export let Schema = new GraphQLSchema({
   query: new GraphQLObjectType({
     name   : 'GraphQLHubAPI',
     description : 'APIs exposed as GraphQL',
     fields : () => FIELDS
   })
 });
-
-module.exports = schema;

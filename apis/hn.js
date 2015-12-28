@@ -7,40 +7,30 @@ let get = function(path) {
   });
 }
 
-let getItem = function(id) {
+export const getItem = function(id) {
   return get(`item/${id}`);
 };
 
-let getUser = function(id) {
+export const getUser = function(id) {
   return get(`user/${id}`);
 };
 
-let getTopStoryIds = function() {
+export const getTopStoryIds = function() {
   return get('topstories');
 };
 
-let getNewStoryIds = function() {
+export const getNewStoryIds = function() {
   return get('newstories');
 };
 
-let getAskStoryIds = function() {
+export const getAskStoryIds = function() {
   return get('askstories');
 };
 
-let getShowStoryIds = function() {
+export const getShowStoryIds = function() {
   return get('showstories');
 };
 
-let getJobStoryIds = function() {
+export const getJobStoryIds = function() {
   return get('jobstories');
-};
-
-export default {
-  getItem,
-  getUser,
-  getTopStoryIds,
-  getNewStoryIds,
-  getAskStoryIds,
-  getShowStoryIds,
-  getJobStoryIds
 };

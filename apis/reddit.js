@@ -15,25 +15,18 @@ let get = function(path, query) {
   });
 };
 
-let getUser = function(username) {
+export const getUser = function(username) {
   return get(`user/${username}/about`);
 };
 
-let getSubreddit = function(name) {
+export const getSubreddit = function(name) {
   return get(`r/${name}/about`);
 };
 
-let getSubredditListings = function(subredditName, listingType, options = {}) {
+export const getSubredditListings = function(subredditName, listingType, options = {}) {
   return get(`r/${subredditName}/${listingType}`, options);
 };
 
-let getComments = function(subredditName, linkId, options = {}) {
+export const getComments = function(subredditName, linkId, options = {}) {
   return get(`r/${subredditName}/comments/${linkId}`, options);
-}
-
-export default {
-  getUser,
-  getSubreddit,
-  getSubredditListings,
-  getComments
 };

@@ -1,13 +1,13 @@
 require('dotenv').load();
 
-let express     = require('express');
-let graphqlHTTP = require('express-graphql');
-let cors        = require('cors');
-let fs          = require('fs');
+import express from 'express';
+import graphqlHTTP from 'express-graphql';
+import cors from 'cors';
+import fs from 'fs';
 
 import Handlebars from 'handlebars';
 
-let Schema = require('./schema');
+import { Schema } from './schemas/graphqlhub';
 
 import path from 'path';
 
@@ -53,11 +53,9 @@ app.use(function(err, req, res, next) {
 });
 
 let PORT = process.env.PORT || 3000;
-let server = app.listen(PORT, () => {
+export const server = app.listen(PORT, () => {
   let host = server.address().address;
   let port = server.address().port;
 
   console.log(`Listening at http://${host}:${port}`);
 });
-
-module.exports = server;
