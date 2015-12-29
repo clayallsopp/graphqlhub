@@ -9,49 +9,101 @@ import {
   GraphQLObjectType,
   GraphQLString,
   GraphQLNonNull,
+  GraphQLEnumType,
 } from 'graphql';
+
+import {
+  mutationWithClientMutationId
+} from 'graphql-relay'
+
+let itemType = new GraphQLObjectType({
+  name : 'KeyValueItem',
+  description : 'Item for a key-value pair',
+  fields: {
+    id : {
+      type : new GraphQLNonNull(GraphQLString),
+      description : 'The item\'s unique id.',
+      resolve : (item) => item.id.toString()
+    },
+    value : {
+      type : GraphQLString,
+      description : 'The item\'s value.',
+      resolve : (item) => item.value
+    },
+  },
+});
+
+let getValueItem = (id) => {
+  let value = get(id);
+  return {
+    id,
+    value,
+  };
+};
 
 let keyvalueType = new GraphQLObjectType({
   name : 'KeyValueAPI',
   description : 'An in-memory key-value store',
   fields : {
-    valueForKey : {
-      type : GraphQLString,
+    getValue : {
+      type : itemType,
       args : {
-        key : {
-          description : 'key of the item',
+        id : {
+          description : 'id of the item',
           type: new GraphQLNonNull(GraphQLString),
         }
       },
-      resolve: function(root, { key }) {
-        return get(key);
+      resolve: function(root, { id }) {
+        return getValueItem(id);
       }
     },
 
   }
 });
 
-let keyvalueMutationType = new GraphQLObjectType({
-  name        : 'KeyValueMutation',
-  description : 'Write to an in-memory key-value store',
-  fields      : {
-    setValueForKey: {
-      type : GraphQLString,
-      args : {
-        key : {
-          type : new GraphQLNonNull(GraphQLString)
-        },
-        value : {
-          type: GraphQLString
-        },
-      },
-      resolve : function(root, { key, value }) {
-        set(key, value);
-        return get(key);
+let SetValueReturnType = new GraphQLObjectType({
+  name : 'SetValueReturnType',
+  fields : {
+    item : {
+      type : itemType,
+      resolve: (root) => {
+        return root;
       }
     }
   }
+})
+
+let SetValueForKeyMutation = mutationWithClientMutationId({
+  name : 'SetValueForKey',
+  inputFields : {
+    id : {
+      type : new GraphQLNonNull(GraphQLString)
+    },
+    value : {
+      type : new GraphQLNonNull(GraphQLString)
+    },
+  },
+  outputFields : {
+    item : {
+      type : itemType,
+      resolve: ({ id }) => {
+        return getValueItem(id);
+      }
+    }
+  },
+  mutateAndGetPayload: ({ id, value }) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        set(id, value);
+        resolve({ id });
+      }, 2 * 1000);
+    });
+  }
 });
+
+let mutations = {
+  setValue: SetValueForKeyMutation
+};
 
 export const Schema = {
   query : {
@@ -60,10 +112,5 @@ export const Schema = {
       return {};
     }
   },
-  mutation : {
-    type : keyvalueMutationType,
-    resolve() {
-      return {}
-    }
-  },
+  mutations
 };

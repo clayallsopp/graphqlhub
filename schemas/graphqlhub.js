@@ -9,10 +9,13 @@ import { Schema as HN } from './hn';
 import { Schema as REDDIT } from './reddit';
 import { Schema as KEYVALUE } from './keyvalue';
 
+let schemas = {
+  hn : HN,
+  reddit : REDDIT,
+  keyValue : KEYVALUE,
+};
+
 let FIELDS = {
-  hn : HN.query,
-  reddit : REDDIT.query,
-  keyValue : KEYVALUE.query,
   graphQLHub : {
     type : GraphQLString,
     description : 'About GraphQLHub',
@@ -21,10 +24,18 @@ let FIELDS = {
     }
   }
 };
+let MUTATION_FIELDS = {};
 
-let MUTATION_FIELDS = {
-  keyValue : KEYVALUE.mutation,
-};
+Object.keys(schemas).forEach((schemaName) => {
+  let { mutations } = schemas[schemaName];
+  if (mutations) {
+    Object.keys(mutations).forEach((mutationName) => {
+      let fixedName = `${schemaName}_${mutationName}`;
+      MUTATION_FIELDS[fixedName] = mutations[mutationName];
+    });
+  }
+  FIELDS[schemaName] = schemas[schemaName].query;
+});
 
 export let Schema = new GraphQLSchema({
   query: new GraphQLObjectType({
