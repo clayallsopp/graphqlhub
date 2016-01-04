@@ -31,10 +31,10 @@ let INDEX      = compileFile(path.join(__dirname, 'public', 'index.html'));
 
 let app = express();
 app.get('/playground', function(req, res) {
-  res.write(PLAYGROUND);
+  res.send(PLAYGROUND);
 });
 app.get('/', function(req, res) {
-  res.write(INDEX);
+  res.send(INDEX);
 });
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/graphql', cors(), graphqlHTTP({ schema: Schema }));
