@@ -60,3 +60,31 @@ export let getRepoForUser = (username, reponame) => {
     });
   });
 }
+
+export let getIssuesForRepo = (username, reponame) => {
+  let issues = github.getIssues(username, reponame);
+  return new Promise((resolve, reject) => {
+    issues.list({}, (err, issues) => {
+      if (issues) {
+        resolve(issues);
+      }
+      else {
+        reject(err);
+      }
+    });
+  });
+}
+
+export let getCommentsForIssue = (username, reponame, issue) => {
+  let issues = github.getIssues(username, reponame);
+  return new Promise((resolve, reject) => {
+    issues.getComments(issue, (err, comments) => {
+      if (comments) {
+        resolve(comments);
+      }
+      else {
+        reject(err);
+      }
+    });
+  });
+}
