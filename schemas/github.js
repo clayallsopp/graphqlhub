@@ -3,6 +3,8 @@ import {
   getReposForUser,
   getCommitsForRepo,
   getRepoForUser,
+  getIssuesForRepo,
+  getCommentsForIssue,
 } from '../apis/github';
 
 import {
@@ -75,6 +77,51 @@ let CommitType = new GraphQLObjectType({
   }
 });
 
+let IssueCommentType = new GraphQLObjectType({
+  name : 'GithubIssueCommentType',
+  fields : {
+    id : { type : GraphQLInt },
+    body : { type : GraphQLString },
+    user : {
+      type : UserType,
+      resolve(issueComment) {
+        return issueComment.user;
+      }
+    }
+  },
+});
+
+let grabUsernameAndReponameFromURL = (url) => {
+  let array = url.split('/repos/')[1].split('/issues')[0].split('/');
+  return {
+    username : array[0],
+    reponame : array[1],
+  };
+}
+
+let IssueType = new GraphQLObjectType({
+  name : 'GithubIssue',
+  fields : {
+    id : { type : GraphQLInt },
+    title : { type : GraphQLString },
+    body : { type : GraphQLString },
+    commentCount : {
+      type : GraphQLInt,
+      resolve(issue) {
+        return issue.comments;
+      }
+    },
+    comments : {
+      type : new GraphQLList(IssueCommentType),
+      resolve(issue) {
+        let { username, reponame } = grabUsernameAndReponameFromURL(issue.url);
+        return getCommentsForIssue(username, reponame, issue);
+      }
+    }
+  }
+});
+
+
 let RepoType = new GraphQLObjectType({
   name : 'GithubRepo',
   fields : {
@@ -85,9 +132,24 @@ let RepoType = new GraphQLObjectType({
       resolve(repo) {
         return getCommitsForRepo(repo.owner.login, repo.name);
       }
+    },
+    issues : {
+      type : new GraphQLList(IssueType),
+      args : {
+        limit : { type : GraphQLInt }
+      },
+      resolve(repo, { limit }) {
+        return getIssuesForRepo(repo.owner.login, repo.name).then((issues) => {
+          if (limit) {
+            return issues.slice(0, limit);
+          }
+          return issues;
+        });
+      }
     }
   }
 });
+
 
 let githubType = new GraphQLObjectType({
   name : 'GithubAPI',

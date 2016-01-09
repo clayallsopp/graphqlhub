@@ -18,7 +18,7 @@
     "dotenv": "1.2.0",
     "express": "4.13.3",
     "express-graphql": "0.3.0",
-    "github-api": "0.10.7",
+    "github-api": "https://github.com/clayallsopp/github/tarball/fork",
     "graphiql": "0.2.0",
     "graphql": "0.4.4",
     "graphql-relay": "0.3.6",
