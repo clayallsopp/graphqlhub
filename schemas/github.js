@@ -192,5 +192,5 @@ export const Schema = {
     resolve() {
       return {};
     }
-  },
+  }
 };
