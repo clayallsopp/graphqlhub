@@ -37,7 +37,7 @@ let UserType = new GraphQLObjectType({
             },
 
             //             user            args
-            resolve: ({ id: userId }, { limit = 10 }) => twitter.getTweets(userId, limit)
+            resolve: ({ id: user_id }, { limit = 10 }) => twitter.getTweets(user_id, limit)
         }
     })
 
