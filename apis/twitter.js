@@ -19,15 +19,15 @@ export const getUser = (authKey, authValue) =>  __getPromise('users/show', { [au
 export const getTweets = (user_id, count) =>    __getPromise('statuses/user_timeline', { user_id, count });
 export const getTweet = (id) =>                 __getPromise('statuses/show', { id });
 export const getRetweets = (id, count) =>       __getPromise('statuses/retweets', { id, count });
-export const searchFor = (queryArgs) =>         __getPromise("search/tweets", queryArgs, 'statuses');
+export const searchFor = (queryParams) =>       __getPromise("search/tweets", queryParams, 'statuses');
 
-const __getPromise = (endpoint, args, resultPath = null) => {
+const __getPromise = (endpoint, parameters, resultPath = null) => {
 
     return new Promise((resolve, reject) => {
 
         Twitter.get(
             endpoint,
-            args,
+            parameters,
             (error, result) => {
 
                 if (error) {
