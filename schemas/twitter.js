@@ -80,6 +80,9 @@ let RetweetType = new GraphQLObjectType({
         },
         in_reply_to_user_id: { type: GraphQLInt },
         in_reply_to_screen_name: { type: GraphQLString },
+        retweeted_status: {
+            type: TweetType
+        },
         user: {
             type: UserType
         }
