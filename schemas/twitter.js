@@ -76,7 +76,7 @@ let RetweetType = new GraphQLObjectType({
         created_at: { type: GraphQLString },
         in_reply_to_tweet_id: {
             type: GraphQLString,
-            resolve: ({ in_reply_to_status_id: in_reply_to_tweet_id }) => in_reply_to_tweet_id
+            resolve: ({ in_reply_to_status_id }) => in_reply_to_status_id
         },
         in_reply_to_user_id: { type: GraphQLInt },
         in_reply_to_screen_name: { type: GraphQLString },
