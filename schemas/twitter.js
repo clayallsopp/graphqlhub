@@ -51,16 +51,11 @@ let TweetType = new GraphQLObjectType({
         id: { type: GraphQLString },
         id_str: { type: GraphQLString },
         created_at: { type: GraphQLString },
-        user_screen_name: {
-            type: GraphQLString,
-            resolve: ({ user: { screen_name: user_screen_name } }) => user_screen_name
-        },
-        user_id: {
-            type: GraphQLInt,
-            resolve: ({ user: { id: user_id } }) => user_id
-        },
         text: { type: GraphQLString },
         retweet_count: { type: GraphQLInt },
+        user: {
+            type: UserType
+        },
         retweets: {
             type: new GraphQLList(RetweetType),
             description: 'Get a list of retweets',
