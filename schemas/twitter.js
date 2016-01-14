@@ -49,6 +49,7 @@ let TweetType = new GraphQLObjectType({
     description: 'A tweet object',
     fields: () => ({
         id: { type: GraphQLString },
+        id_str: { type: GraphQLString },
         created_at: { type: GraphQLString },
         user_screen_name: {
             type: GraphQLString,
@@ -66,7 +67,7 @@ let TweetType = new GraphQLObjectType({
             args: {
                 limit: { type: GraphQLInt }
             },
-            resolve: ({ id: tweetId }, { limit = 5 }) => twitter.getRetweets(tweetId, limit)
+            resolve: ({ id_str: tweetId }, { limit = 5 }) => twitter.getRetweets(tweetId, limit)
         }
     })
 });
