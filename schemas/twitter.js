@@ -130,6 +130,28 @@ let twitterType = new GraphQLObjectType({
                 }
             },
             resolve: (_, { id: tweetId }) => twitter.getTweet(tweetId)
+        },
+        search: {
+            type: new GraphQLList(TweetType),
+            description: "Returns a collection of relevant Tweets matching a specified query.",
+            args: {
+                q: {
+                    type: new GraphQLNonNull(GraphQLString),
+                    description: "A UTF-8, URL-encoded search query of 500 characters maximum, including operators. Queries may additionally be limited by complexity."
+                },
+                count: {
+                    type: GraphQLInt,
+                    description: "The number of tweets to return per page, up to a maximum of 100. Defaults to 15. This was formerly the “rpp” parameter in the old Search API."
+                },
+                result_type: {
+                    type: GraphQLString,
+                    description: `Specifies what type of search results you would prefer to receive. The current default is “mixed.” Valid values include:
+                    * mixed: Include both popular and real time results in the response.
+                    * recent: return only the most recent results in the response
+                    * popular: return only the most popular results in the response.`
+                }
+            },
+            resolve: (_, searchArgs) => twitter.searchFor(searchArgs)
         }
     }
 });
