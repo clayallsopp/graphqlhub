@@ -10,6 +10,7 @@ This powers the server behind [GraphQLHub](http://www.graphqlhub.com/). It's bas
 - [Hacker News](schemas/hn.js)
 - [Reddit](schemas/reddit.js)
 - [GitHub](schemas/github.js)
+- [GitHub](schemas/twitter.js)
 - [GraphQLHub](schemas/graphqlhub.js), which contains all the other schemas
 
 ## TODO
