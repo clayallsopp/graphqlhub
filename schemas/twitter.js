@@ -1,15 +1,12 @@
 import * as twitter from '../apis/twitter';
 
 import {
-    graphql,
     GraphQLSchema,
     GraphQLObjectType,
     GraphQLString,
     GraphQLNonNull,
-    GraphQLEnumType,
     GraphQLInt,
     GraphQLList,
-    GraphQLUnionType,
 } from 'graphql';
 
 let UserType = new GraphQLObjectType({
