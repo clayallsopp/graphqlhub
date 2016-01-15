@@ -3,6 +3,7 @@ import * as twitter from '../apis/twitter';
 import {
     GraphQLSchema,
     GraphQLObjectType,
+    GraphQLID,
     GraphQLString,
     GraphQLNonNull,
     GraphQLInt,
@@ -16,7 +17,7 @@ let UserType = new GraphQLObjectType({
     fields: () => ({
         created_at: { type: GraphQLString },
         description: { type: GraphQLString },
-        id: { type: GraphQLInt },
+        id: { type: GraphQLID }, // GraphQLInt would return null
         screen_name: { type: GraphQLString },
         name: { type: GraphQLString },
         profile_image_url: { type: GraphQLString },
@@ -45,7 +46,7 @@ let TweetType = new GraphQLObjectType({
     name: 'Tweet',
     description: 'A tweet object',
     fields: () => ({
-        id: { type: GraphQLString },
+        id: { type: GraphQLID },
         id_str: { type: GraphQLString },
         created_at: { type: GraphQLString },
         text: { type: GraphQLString },
@@ -69,7 +70,7 @@ let RetweetType = new GraphQLObjectType({
     name: 'Retweet',
     description: 'Retweet of a tweet',
     fields: () => ({
-        id: { type: GraphQLString },
+        id: { type: GraphQLID },
         created_at: { type: GraphQLString },
         in_reply_to_tweet_id: {
             type: GraphQLString,
