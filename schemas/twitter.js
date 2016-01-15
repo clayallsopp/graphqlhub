@@ -47,7 +47,6 @@ let TweetType = new GraphQLObjectType({
     description: 'A tweet object',
     fields: () => ({
         id: { type: GraphQLID },
-        id_str: { type: GraphQLString },
         created_at: { type: GraphQLString },
         text: { type: GraphQLString },
         retweet_count: { type: GraphQLInt },
