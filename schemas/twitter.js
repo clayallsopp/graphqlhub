@@ -24,7 +24,7 @@ let UserType = new GraphQLObjectType({
         url: { type: GraphQLString },
         tweets_count: { 
             type: GraphQLInt,
-            resolve: ({ statuses_count: tweets_count }) => tweets_count
+            resolve: ({ statuses_count }) => statuses_count
         },
         followers_count: { type: GraphQLInt },
         tweets: {
