@@ -59,6 +59,7 @@ let TweetType = new GraphQLObjectType({
             args: {
                 limit: { type: GraphQLInt }
             },
+            //        passing integer 'id' here doesn't work surprisingly, had to use 'id_str'
             resolve: ({ id_str: tweetId }, { limit = 5 }) => twitter.getRetweets(tweetId, limit)
         }
     })
