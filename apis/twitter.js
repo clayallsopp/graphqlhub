@@ -1,4 +1,4 @@
-import Twit from 'Twit';
+import Twit from 'twit';
 import getObjProperty from 'lodash.get';
 
 const {
