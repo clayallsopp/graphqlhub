@@ -23,7 +23,7 @@ let UserType = new GraphQLObjectType({
         name: { type: GraphQLString },
         profile_image_url: { type: GraphQLString },
         url: { type: GraphQLString },
-        tweets_count: { 
+        tweets_count: {
             type: GraphQLInt,
             resolve: ({ statuses_count }) => statuses_count
         },
@@ -114,11 +114,11 @@ let twitterType = new GraphQLObjectType({
                 }
                 else {
 
-                    if (!_.isNumber(user_id)) {
-                        return getUser('screen_name', screen_name);
+                    if (_.isNumber(user_id)) {
+                        return getUser('user_id', user_id);
                     }
                     else {
-                        return getUser('user_id', user_id);
+                      return getUser('screen_name', screen_name);
                     }
                 }
             }
