@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import * as twitter from '../apis/twitter';
 
 import {
@@ -113,7 +114,7 @@ let twitterType = new GraphQLObjectType({
                 }
                 else {
 
-                    if (isNaN(parseInt(user_id))) {
+                    if (!_.isNumber(user_id)) {
                         return getUser('screen_name', screen_name);
                     }
                     else {

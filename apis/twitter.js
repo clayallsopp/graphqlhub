@@ -1,5 +1,5 @@
 import Twit from 'twit';
-import getObjProperty from 'lodash.get';
+import _ from 'lodash';
 
 const {
     TWITTER_ACCESS_SECRET,
@@ -34,7 +34,7 @@ const __getPromise = (endpoint, parameters, resultPath = null) => {
                     reject(error);
                 }
                 else {
-                    resolve( resultPath !== null ? getObjProperty(result, resultPath) : result );
+                    resolve( resultPath !== null ? _.get(result, resultPath) : result );
                 }
             }
         )
