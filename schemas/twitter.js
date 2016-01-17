@@ -84,11 +84,11 @@ let RetweetType = new GraphQLObjectType({
 });
 
 let userIdentityType = new GraphQLScalarType({
-  name: 'UserIdentity',
-  description: 'Parse user provided identity',
-  serialize: value => value,
-  parseValue: value => value,
-  parseLiteral: ast => {
+  name         : 'UserIdentity',
+  description  : 'Parse user provided identity',
+  serialize    : value => value,
+  parseValue   : value => value,
+  parseLiteral : ast => {
 
     if (ast.kind !== Kind.STRING && ast.kind !== Kind.INT) {
       throw new GraphQLError("Query error: Can only parse Integer and String but got a: " + ast.kind, [ast]);
