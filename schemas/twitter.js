@@ -13,10 +13,10 @@ import {
   GraphQLEnumType
 } from 'graphql';
 
-let UserType = new GraphQLObjectType({
 import { GraphQLError } from 'graphql/error';
 import { Kind } from 'graphql/language';
 
+let UserType = new GraphQLObjectType({
   name        : 'TwitterUser',
   description : 'Twitter user, or as we like to say in France: a \'tweetos\'',
   fields      : () => ({
@@ -46,7 +46,6 @@ import { Kind } from 'graphql/language';
 });
 
 let TweetType = new GraphQLObjectType({
-
   name        : 'Tweet',
   description : 'A tweet object',
   fields      : () => ({
@@ -68,7 +67,6 @@ let TweetType = new GraphQLObjectType({
 });
 
 let RetweetType = new GraphQLObjectType({
-
   name        : 'Retweet',
   description : 'Retweet of a tweet',
   fields      : () => ({
