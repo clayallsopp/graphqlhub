@@ -2,8 +2,6 @@ import Twit from 'twit';
 import _ from 'lodash';
 
 const {
-  TWITTER_ACCESS_SECRET,
-  TWITTER_ACCESS_TOKEN,
   TWITTER_CONSUMER_KEY,
   TWITTER_CONSUMER_SECRET
 } = process.env;
@@ -11,8 +9,7 @@ const {
 const Twitter = new Twit({
   consumer_key        : TWITTER_CONSUMER_KEY,
   consumer_secret     : TWITTER_CONSUMER_SECRET,
-  access_token        : TWITTER_ACCESS_TOKEN,
-  access_token_secret : TWITTER_ACCESS_SECRET
+  app_only_auth       : true
 });
 
 export const getUser = (authKey, authValue) => __getPromise('users/show', { [authKey]: authValue });
