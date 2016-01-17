@@ -107,6 +107,16 @@ let userIdentifierType = new GraphQLEnumType({
   }
 });
 
+let searchReponseType = new GraphQLEnumType({
+  name        : 'SearchReponse',
+  description : 'Type of search response.',
+  values: {
+    mixed   : { value: 'mixed' },
+    recent  : { value: 'recent' },
+    popular : { value: 'popular' }
+  }
+});
+
 let twitterType = new GraphQLObjectType({
   name        : 'TwitterAPI',
   description : 'The Twitter API',
@@ -148,7 +158,7 @@ let twitterType = new GraphQLObjectType({
           description : "The number of tweets to return per page, up to a maximum of 100. Defaults to 15. This was formerly the “rpp” parameter in the old Search API."
         },
         result_type: {
-          type: GraphQLString,
+          type: searchReponseType,
           description: `Specifies what type of search results you would prefer to receive. The current default is “mixed.” Valid values include:
           * mixed: Include both popular and real time results in the response.
           * recent: return only the most recent results in the response
