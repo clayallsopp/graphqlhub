@@ -36,10 +36,13 @@ let UserType = new GraphQLObjectType({
       type        : new GraphQLList(TweetType),
       description : 'Get a list of tweets for current user',
       args        : {
-        limit: { type: GraphQLInt }
+        limit: {
+          type         : GraphQLInt,
+          defaultValue : 10
+        }
       },
       //             user            args
-      resolve: ({ id: user_id }, { limit = 10 }) => twitter.getTweets(user_id, limit)
+      resolve: ({ id: user_id }, { limit }) => twitter.getTweets(user_id, limit)
     }
   })
 
@@ -58,10 +61,13 @@ let TweetType = new GraphQLObjectType({
       type        : new GraphQLList(RetweetType),
       description : 'Get a list of retweets',
       args        : {
-        limit: { type: GraphQLInt }
+        limit: {
+          type         : GraphQLInt,
+          defaultValue : 5
+        }
       },
       //        passing integer 'id' here doesn't work surprisingly, had to use 'id_str'
-      resolve: ({ id_str: tweetId }, { limit = 5 }) => twitter.getRetweets(tweetId, limit)
+      resolve: ({ id_str: tweetId }, { limit }) => twitter.getRetweets(tweetId, limit)
     }
   })
 });
@@ -155,11 +161,11 @@ let twitterType = new GraphQLObjectType({
         },
         count: {
           type        : GraphQLInt,
-          description : "The number of tweets to return per page, up to a maximum of 100. Defaults to 15. This was formerly the “rpp” parameter in the old Search API."
+          description : "The number of tweets to return per page, up to a maximum of 100. This was formerly the “rpp” parameter in the old Search API."
         },
         result_type: {
           type: searchReponseType,
-          description: `Specifies what type of search results you would prefer to receive. The current default is “mixed.” Valid values include:
+          description: `Specifies what type of search results you would prefer to receive. Valid values include:
           * mixed: Include both popular and real time results in the response.
           * recent: return only the most recent results in the response
           * popular: return only the most popular results in the response.`
