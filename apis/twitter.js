@@ -12,11 +12,11 @@ const Twitter = new Twit({
   app_only_auth       : true
 });
 
-export const getUser = (authKey, authValue) => __getPromise('users/show', { [authKey]: authValue });
-export const getTweets = (user_id, count)   => __getPromise('statuses/user_timeline', { user_id, count });
-export const getTweet = (id)                => __getPromise('statuses/show', { id });
-export const getRetweets = (id, count)      => __getPromise('statuses/retweets', { id, count });
-export const searchFor = (queryParams)      => __getPromise("search/tweets", queryParams, 'statuses');
+export const getUser = (identifier, identity) => __getPromise('users/show', { [identifier]: identity });
+export const getTweets = (user_id, count)     => __getPromise('statuses/user_timeline', { user_id, count });
+export const getTweet = (id)                  => __getPromise('statuses/show', { id });
+export const getRetweets = (id, count)        => __getPromise('statuses/retweets', { id, count });
+export const searchFor = (queryParams)        => __getPromise("search/tweets", queryParams, 'statuses');
 
 const __getPromise = (endpoint, parameters, resultPath = null) => {
 
