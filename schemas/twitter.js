@@ -9,9 +9,13 @@ import {
   GraphQLNonNull,
   GraphQLInt,
   GraphQLList,
+  GraphQLScalarType,
+  GraphQLEnumType
 } from 'graphql';
 
 let UserType = new GraphQLObjectType({
+import { GraphQLError } from 'graphql/error';
+import { Kind } from 'graphql/language';
 
   name        : 'TwitterUser',
   description : 'Twitter user, or as we like to say in France: a \'tweetos\'',
@@ -81,40 +85,47 @@ let RetweetType = new GraphQLObjectType({
   })
 });
 
-let twitterType = new GraphQLObjectType({
+let userIdentityType = new GraphQLScalarType({
+  name: 'UserIdentity',
+  description: 'Parse user provided identity',
+  serialize: value => value,
+  parseValue: value => value,
+  parseLiteral: ast => {
 
+    if (ast.kind !== Kind.STRING && ast.kind !== Kind.INT) {
+      throw new GraphQLError("Query error: Can only parse Integer and String but got a: " + ast.kind, [ast]);
+    }
+
+    return ast.value;
+  }
+});
+
+let userIdentifierType = new GraphQLEnumType({
+  name        : 'UserIdentifier',
+  description : 'Either user unique ID, or screen name',
+  values      : {
+    'id'   : { value: 'user_id' },
+    'name' : { value: 'screen_name' }
+  }
+});
+
+let twitterType = new GraphQLObjectType({
   name        : 'TwitterAPI',
   description : 'The Twitter API',
   fields : {
     user : {
       type : UserType,
       args : {
-        user_id: {
-          description : 'ID of user account',
-          type        : GraphQLInt
+        identifier: {
+          description : 'Either user_id or screen_name',
+          type        : new GraphQLNonNull(userIdentifierType)
         },
-        screen_name: {
-          description : 'Screenname of the user',
-          type        : GraphQLString
-        }
+        identity: {
+          description : 'User ID (Integer) or Screen name (String) to identify user',
+          type        : new GraphQLNonNull(userIdentityType)
+        },
       },
-      resolve: (_, { user_id, screen_name }) => {
-
-        const { getUser } = twitter;
-
-        if (!user_id && !screen_name) {
-          return getUser('user_id', 9533042);
-        }
-        else {
-
-          if (_.isNumber(user_id)) {
-            return getUser('user_id', user_id);
-          }
-          else {
-            return getUser('screen_name', screen_name);
-          }
-        }
-      }
+      resolve: (_, { identifier, identity }) => twitter.getUser(identifier, identity)
     },
     tweet: {
       type : TweetType,
