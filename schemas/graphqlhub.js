@@ -9,12 +9,14 @@ import { Schema as HN } from './hn';
 import { Schema as REDDIT } from './reddit';
 import { Schema as KEYVALUE } from './keyvalue';
 import { Schema as GITHUB } from './github';
+import { Schema as TWITTER } from './twitter';
 
 let schemas = {
   hn : HN,
   reddit : REDDIT,
   keyValue : KEYVALUE,
   github : GITHUB,
+  twitter: TWITTER
 };
 
 let FIELDS = {
