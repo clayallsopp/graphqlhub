@@ -69,7 +69,6 @@ export default function graphQLInstrumentation(schema, loggingCallback, { addToR
           let jsonString = arguments[0];
           let obj = JSON.parse(jsonString);
           obj.response = req.rootValue.response;
-          process.nextTick()
           return _send.apply(res, [JSON.stringify(obj)]);
         }
       }
