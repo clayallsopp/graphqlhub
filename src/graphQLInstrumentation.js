@@ -68,7 +68,7 @@ export default function graphQLInstrumentation(schema, loggingCallback, { addToR
         if (res.get('Content-Type') === 'text/json; charset=utf-8') {
           let jsonString = arguments[0];
           let obj = JSON.parse(jsonString);
-          obj.response = req.rootValue.response;
+          obj.extensions = { instrumentation : req.rootValue.response };
           return _send.apply(res, [JSON.stringify(obj)]);
         }
       }
