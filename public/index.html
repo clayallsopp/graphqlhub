@@ -21,7 +21,7 @@
       <li><a href="/playground/keyvalue">Explore a Relay-compatible Key-Value store</a></li>
     </ul>
     <p>Follow <a href="http://twitter.com/GraphQLHub">@GraphQLHub</a> for more updates. This page intentionally unstyled, for now.</p>
-    <div id="chart"></div>
+    <div id="chart" style="max-width: 700px; margin: 0 auto;"></div>
 
     <script src="{{ CONSTANTS.keenPath }}"></script>
     <script type="text/javascript">
@@ -35,7 +35,7 @@
         var query = new Keen.Query("count", {
           eventCollection: "totalDurations",
           interval: "daily",
-          timeframe: "this_14_days",
+          timeframe: "this_7_days",
           timezone: "UTC"
         });
 
