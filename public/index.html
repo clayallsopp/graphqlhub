@@ -10,10 +10,6 @@
 <html>
   <head>
     <title>GraphQL Hub</title>
-    <link rel="stylesheet" href="/graphiql.css" />
-    <script src="{{ CONSTANTS.reactPath }}"></script>
-    <script src="{{ CONSTANTS.fetchPath }}"></script>
-    <script src="/graphiql.js"></script>
   </head>
   <body style='padding: 30px; font-family: sans-serif;'>
     <h1>GraphQLHub APIs:</h1>
@@ -25,5 +21,29 @@
       <li><a href="/playground/keyvalue">Explore a Relay-compatible Key-Value store</a></li>
     </ul>
     <p>Follow <a href="http://twitter.com/GraphQLHub">@GraphQLHub</a> for more updates. This page intentionally unstyled, for now.</p>
+    <div id="chart"></div>
+
+    <script src="{{ CONSTANTS.keenPath }}"></script>
+    <script type="text/javascript">
+      var client = new Keen({
+        projectId: "{{ CONSTANTS.keenProjectId }}",
+        readKey: "{{ CONSTANTS.keenReadKey }}"
+
+      });
+
+      Keen.ready(function(){
+        var query = new Keen.Query("count", {
+          eventCollection: "totalDurations",
+          interval: "daily",
+          timeframe: "this_14_days",
+          timezone: "UTC"
+        });
+
+        client.draw(query, document.getElementById("chart"), {
+          title : 'Queries per Day'
+        });
+
+      });
+    </script>
   </body>
 </html>
