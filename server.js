@@ -16,11 +16,16 @@ let IS_PROD = (process.env.NODE_ENV === 'production');
 let CDN = {
   react : 'https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.min.js',
   fetch : 'https://cdnjs.cloudflare.com/ajax/libs/fetch/0.9.0/fetch.min.js',
+  keen  : 'https://cdnjs.cloudflare.com/ajax/libs/keen-js/3.3.0/keen.min.js',
 };
 
 let CONSTANTS = {
   reactPath : (IS_PROD ? CDN.react : '/react.js'),
-  fetchPath : (IS_PROD ? CDN.fetch : '/fetch.js')
+  fetchPath : (IS_PROD ? CDN.fetch : '/fetch.js'),
+  keenPath  : (IS_PROD ? CDN.keen  : '/keen.js'),
+
+  keenProjectId : process.env.KEEN_PROJECT_ID,
+  keenReadKey   : process.env.KEEN_READ_KEY,
 };
 
 let compileFile = function(filePath) {
@@ -28,16 +33,29 @@ let compileFile = function(filePath) {
   return Handlebars.compile(fileString)({ CONSTANTS });
 };
 
-let PLAYGROUND = compileFile(path.join(__dirname, 'public', 'playground', 'index.html'));
-let INDEX      = compileFile(path.join(__dirname, 'public', 'index.html'));
+let HTMLS = {
+  PLAYGROUND : () => compileFile(path.join(__dirname, 'public', 'playground', 'index.html')),
+  INDEX      : () => compileFile(path.join(__dirname, 'public', 'index.html')),
+};
+
+let CACHED_HTMLS = Object.keys(HTMLS).reduce((value, key) => {
+  value[key] = HTMLS[key]();
+  return value;
+}, {});
+let renderHTML = (key) => {
+  return (req, res) => {
+    if (IS_PROD) {
+      res.send(CACHED_HTMLS[key]);
+    }
+    else {
+      res.send(HTMLS[key]());
+    }
+  };
+};
 
 let app = express();
-app.get('/playground', function(req, res) {
-  res.send(PLAYGROUND);
-});
-app.get('/', function(req, res) {
-  res.send(INDEX);
-});
+app.get('/playground', renderHTML('PLAYGROUND'));
+app.get('/', renderHTML('INDEX'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/graphql', cors(), instrumentationMiddleware(Schema, timingCallback, { addToResponse : false }), graphqlHTTP((req, res) => {
   return { schema: Schema, rootValue : req.rootValue }
