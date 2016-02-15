@@ -6,7 +6,8 @@ export default (timings) => {
     let fieldType = `${type}#${field}`;
     // filter out really fast things (probably just obj.property calls)
     if (duration > 0.005) {
-      keen.addEvent('fieldDurations', { type, field, duration, fieldType });
+      // disabled because of account limits
+      // keen.addEvent('fieldDurations', { type, field, duration, fieldType });
     }
   });
 }
