@@ -20,7 +20,7 @@
     "express-graphql": "0.3.0",
     "github-api": "https://github.com/clayallsopp/github/tarball/fork",
     "graphiql": "0.2.0",
-    "graphql": "0.4.4",
+    "graphql": "0.4.17",
     "graphql-relay": "0.3.6",
     "handlebars": "4.0.3",
     "keen-js": "3.4.0-rc2",
