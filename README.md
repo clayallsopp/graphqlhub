@@ -1,9 +1,15 @@
+<p align="center">
+  <img src="public/images/graphqlhub-logo.png" alt="GraphQLHub Logo" width="305" height="300"/>
+</p>
+
 # GraphQLHub Server [![Build Status](https://travis-ci.org/clayallsopp/graphqlhub.svg)](https://travis-ci.org/clayallsopp/graphqlhub)
 
 This powers the server behind [GraphQLHub](http://www.graphqlhub.com/). It's basically:
 
 - The GraphQL Schemas and fetching code for each API
 - A slightly forked version of [GraphiQL](https://github.com/graphql/graphiql)
+
+> Try the [live app here](https://www.graphqlhub.com/)
 
 ## Schemas
 
@@ -12,6 +18,28 @@ This powers the server behind [GraphQLHub](http://www.graphqlhub.com/). It's bas
 - [GitHub](schemas/github.js)
 - [Twitter](schemas/twitter.js)
 - [GraphQLHub](schemas/graphqlhub.js), which contains all the other schemas
+
+## Quick start
+
+```bash
+# clone the repo
+git clone https://github.com/clayallsopp/graphqlhub.git
+
+# change into the repo directory
+cd graphqlhub
+
+# install 
+npm install
+
+# create your .env file 
+cp .env.example .env
+# ... and populate .env with your API keys
+
+# run
+npm run start
+```
+
+Then visit [http://localhost:3000](http://localhost:3000) in your browser. 
 
 ## TODO
 
