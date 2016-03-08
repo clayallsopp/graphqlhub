@@ -1,6 +1,9 @@
 language: node_js
 node_js:
 - '4.1'
+install:
+  - npm install
+  - cd ./graphqlhub-schemas && npm install
 deploy:
   provider: heroku
   api_key:

@@ -5,7 +5,7 @@
   "description": "GraphQLHub.com",
   "main": "src/server.js",
   "scripts": {
-    "test": "cd schemas && npm test",
+    "test": "cd ./graphqlhub-schemas && npm test",
     "start": "DEBUG=express:* nodemon entrypoint.js",
     "postinstall": "cd ./node_modules/graphqlhub-schemas && npm run bundle && cd -"
   },
