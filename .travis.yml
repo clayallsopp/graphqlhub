@@ -7,7 +7,7 @@ install:
   - npm install
   - cd ./graphqlhub-schemas && npm install && cd ..
 before_deploy:
-  - [ ! -z ${TRAVIS_TAG+x} ] && cd ./graphqlhub-schemas || true
+  - ./scripts/try-npm-publish.sh
 deploy:
   - provider: heroku
     api_key:
