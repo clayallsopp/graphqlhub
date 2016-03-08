@@ -1,13 +1,26 @@
 language: node_js
 node_js:
 - '4.1'
+before_install:
+  - npm install -g npm@3.5.3
 install:
   - npm install
   - cd ./graphqlhub-schemas && npm install && cd ..
+before_deploy:
+  - ./scripts/try-npm-publish.sh
 deploy:
-  provider: heroku
-  api_key:
-    secure: szhg+pTuFpxSAZEtNbGIue+ITt+F1QDfOIaK9iw4QHGKcrFrgQkXGDADSgHot4P01kQ6KpuOBw1Ryx3ce2ithebhl55zdaMXQfkKlh9vGSEO05R0yyY7SM6UUJWGebXIzZFf8G/vTbJh+jdyeBuvJ0uiDErIrKNctA5E5XFbXKWTSo3n5EDYYGEx1E89IkZX+Txs98xTfLdIZkQYG6JSF08KF6asPAbpBNXSyo8zGtXPEuB3t3pccPaHwnzSnVS4Ljhujtl6H4DmY+AnkCJpW4Tb0HAnqBX+kGnSoYyv3fG80qABkE1tUvjNzGInc0BMLFI6LrhUrLRRf8Spd4LR//tn6Wy2xLm0tsmLWHz+bE9WyopooLyWamUQRW1YUXdfRiw5CM1q5TTWii/cvdWzuuX1XBXM4FKX5LdON+hbdg/gciLQZMVyzllM7+58SNdyNiYQXObi7ioWVV6UUwv/+P++F2CwDncnjRXCUmx5ZRe8T9UnmTa5xg+YsyKcEHKz1ms9TZoQxKro4YJAxLRsn4gQd9+Sbe1WZeiQfv/JSV98VJujiCbVO8iSWMAW7Le7NxTy/Gih2u3Z13LteLSz4KF5LPAoSLO/2KDTEsZwl9uyjblGi2sVIbvkTd0P0SnAz03k73YG4qXN4R7/h3RnIl1OCk8eRGAF6eSCFpXQtjQ=
-  app: graphqlhub
+  - provider: heroku
+    api_key:
+      secure: szhg+pTuFpxSAZEtNbGIue+ITt+F1QDfOIaK9iw4QHGKcrFrgQkXGDADSgHot4P01kQ6KpuOBw1Ryx3ce2ithebhl55zdaMXQfkKlh9vGSEO05R0yyY7SM6UUJWGebXIzZFf8G/vTbJh+jdyeBuvJ0uiDErIrKNctA5E5XFbXKWTSo3n5EDYYGEx1E89IkZX+Txs98xTfLdIZkQYG6JSF08KF6asPAbpBNXSyo8zGtXPEuB3t3pccPaHwnzSnVS4Ljhujtl6H4DmY+AnkCJpW4Tb0HAnqBX+kGnSoYyv3fG80qABkE1tUvjNzGInc0BMLFI6LrhUrLRRf8Spd4LR//tn6Wy2xLm0tsmLWHz+bE9WyopooLyWamUQRW1YUXdfRiw5CM1q5TTWii/cvdWzuuX1XBXM4FKX5LdON+hbdg/gciLQZMVyzllM7+58SNdyNiYQXObi7ioWVV6UUwv/+P++F2CwDncnjRXCUmx5ZRe8T9UnmTa5xg+YsyKcEHKz1ms9TZoQxKro4YJAxLRsn4gQd9+Sbe1WZeiQfv/JSV98VJujiCbVO8iSWMAW7Le7NxTy/Gih2u3Z13LteLSz4KF5LPAoSLO/2KDTEsZwl9uyjblGi2sVIbvkTd0P0SnAz03k73YG4qXN4R7/h3RnIl1OCk8eRGAF6eSCFpXQtjQ=
+    app: graphqlhub
+    on:
+      condition: -z ${TRAVIS_TAG+x}
+  - provider: npm
+    email: clay.allsopp@gmail.com
+    api_key:
+      secure: hMGYHqbLvjQK6L66CTWWCMqkAe0jmq/O1RYC34S5/8iR8cKMPwrknUrr/0mVMMLak7lbYCnSJFlRBN8Vy5KnXDPWXgWr2mRPoVx7tiPQ8EX49sQ067YMYPRDuZlW3StLAj96sADvah2xB9Gzk5E1oesWBr5bgMB7qVCvx9U4kGKmGoiC8Sbe4Q8mHBIL44MhvSP1Kjc+uAFOXyF2krwksmqJV9MJ/mBFXnWTqGtDZSLEQj3ocyjDOm8B/5lBEmKhqp7IfrvAks8DHZemCnuZcfyBQXeU8KYd16E846X7+0jn4VCvhix/vQYZvzLad1W+vzoeyejppIPAo4t2iLdUlGqQE8Cu8b0JXJQbVoKcE2mPypXXhDc/r7ktSC6XrYBPMMuz3xdcvjXrdfGracOSoq2mOnPBAG3IJeoWBSN2CNYOp8ofVn3FXEM+4WWGh5eBqJtERvf7GhuYUyp55Ri+aIzKGm+IoKi34nZFikSQ4t3GddHZGORNP5KXeMmCy+2uHMxtse+tMnCQ6CEyP4DOIDjkHoPyiwB1ckn7gsxxapUgix2e6QbqRY+M63gR81zlUM2XeTpzvAexuEBaeYtOfBA20+g4u/2x8b9gOBoJm0/BuGGwI07KrulfussW6tC/G4u6iAx5mAVmLaWMwVFmdk2F8nYjl5ScaMWamapb7fA=
+    on:
+      tags: true
+      repo: clayallsopp/graphqlhub
 env:
   - TWITTER_CONSUMER_KEY=dummy_consumer_key TWITTER_CONSUMER_SECRET=dummy_consumer_secret
