@@ -3,12 +3,12 @@
 ```
 $ npm i graphqlhub-schemas --save
 
-import { Schema as RedditSchema } from 'graphqlhub-schemas/reddit';
+import { Reddit } from 'graphqlhub-schemas';
 import { GraphQLSchema } from 'graphql';
 import graphqlHTTP from 'express-graphql';
 
 let schema = new GraphQLSchema({
-  query: RedditSchema.query
+  query: Reddit.query
 });
 
 app.use('/graphql', graphqlHTTP({ schema }));
@@ -19,7 +19,7 @@ app.use('/graphql', graphqlHTTP({ schema }));
 Each schema file exports an object that looks like:
 
 ```
-import { Schema } from SCHEMA_FILE;
+import { <Schema> as Schema } from 'graphqlhub-schemas';
 
 let { query } = Schema;
 let { type, resolve } = query;
@@ -27,7 +27,4 @@ let { type, resolve } = query;
 // resolve is an empty function
 ```
 
-- `'graphqlhub-schemas/reddit'`
-- `'graphqlhub-schemas/github'`
-- `'graphqlhub-schemas/twitter'`
-- `'graphqlhub-schemas/hn'`
+See [src/index.js](src/index.js) from available schemas.
