@@ -3,7 +3,7 @@ node_js:
 - '4.1'
 install:
   - npm install
-  - cd ./graphqlhub-schemas && npm install
+  - cd ./graphqlhub-schemas && npm install && cd ..
 deploy:
   provider: heroku
   api_key:
