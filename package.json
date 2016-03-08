@@ -5,9 +5,9 @@
   "description": "GraphQLHub.com",
   "main": "src/server.js",
   "scripts": {
-    "test": "cd ./graphqlhub-schemas && npm test",
+    "test": "pushd ./graphqlhub-schemas && npm test && popd",
     "start": "DEBUG=express:* nodemon entrypoint.js",
-    "postinstall": "cd ./node_modules/graphqlhub-schemas && npm run bundle && cd -"
+    "postinstall": "pushd ./node_modules/graphqlhub-schemas && npm run bundle && popd"
   },
   "author": "Clay Allsopp <clay.allsopp@gmail.com>",
   "license": "MIT",
