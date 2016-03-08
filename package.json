@@ -3,9 +3,9 @@
   "repository": "clayallsopp/graphqlhub",
   "version": "1.0.0",
   "description": "GraphQLHub.com",
-  "main": "entrypoint.js",
+  "main": "src/server.js",
   "scripts": {
-    "test": "node test.js",
+    "test": "cd schemas && npm test",
     "start": "DEBUG=express:* nodemon entrypoint.js"
   },
   "author": "Clay Allsopp <clay.allsopp@gmail.com>",
@@ -21,7 +21,7 @@
     "github-api": "https://github.com/clayallsopp/github/tarball/fork",
     "graphiql": "0.2.0",
     "graphql": "0.4.17",
-    "graphql-relay": "0.3.6",
+    "graphqlhub-schemas": "file:./graphqlhub-schemas",
     "handlebars": "4.0.3",
     "keen-js": "3.4.0-rc2",
     "lodash": "3.10.1",

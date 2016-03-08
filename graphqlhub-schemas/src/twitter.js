@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import * as twitter from '../apis/twitter';
+import * as twitter from './apis/twitter';
 
 import {
   GraphQLSchema,

@@ -5,7 +5,7 @@ import {
   getRepoForUser,
   getIssuesForRepo,
   getCommentsForIssue,
-} from '../apis/github';
+} from './apis/github';
 
 import {
   graphql,
