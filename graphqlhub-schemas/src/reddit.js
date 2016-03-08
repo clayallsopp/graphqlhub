@@ -3,7 +3,7 @@ import {
   getSubreddit,
   getSubredditListings,
   getComments
-} from '../apis/reddit';
+} from './apis/reddit';
 
 import {
   graphql,

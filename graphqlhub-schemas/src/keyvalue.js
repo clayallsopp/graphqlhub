@@ -1,7 +1,7 @@
 import {
   get,
   set
-} from '../apis/keyvalue';
+} from './apis/keyvalue';
 
 import {
   graphql,

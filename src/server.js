@@ -5,12 +5,12 @@ import fs from 'fs';
 
 import Handlebars from 'handlebars';
 
-import { Schema } from './schemas/graphqlhub';
-import instrumentationMiddleware from './src/graphQLInstrumentation';
+import { GraphQLHub as Schema } from 'graphqlhub-schemas';
+import instrumentationMiddleware from './graphQLInstrumentation';
 
 import path from 'path';
 
-import timingCallback from './src/timingCallback';
+import timingCallback from './timingCallback';
 
 let IS_PROD = (process.env.NODE_ENV === 'production');
 let CDN = {
@@ -34,8 +34,8 @@ let compileFile = function(filePath) {
 };
 
 let HTMLS = {
-  PLAYGROUND : () => compileFile(path.join(__dirname, 'public', 'playground', 'index.html')),
-  INDEX      : () => compileFile(path.join(__dirname, 'public', 'index.html')),
+  PLAYGROUND : () => compileFile(path.join(__dirname, '..', 'public', 'playground', 'index.html')),
+  INDEX      : () => compileFile(path.join(__dirname, '..', 'public', 'index.html')),
 };
 
 let CACHED_HTMLS = Object.keys(HTMLS).reduce((value, key) => {
@@ -56,7 +56,7 @@ let renderHTML = (key) => {
 let app = express();
 app.get('/playground', renderHTML('PLAYGROUND'));
 app.get('/', renderHTML('INDEX'));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use('/graphql', cors(), instrumentationMiddleware(Schema, timingCallback, { addToResponse : false }), graphqlHTTP((req, res) => {
   return { schema: Schema, rootValue : req.rootValue }
 }));

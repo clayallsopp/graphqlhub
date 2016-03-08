@@ -6,7 +6,7 @@ import {
   getAskStoryIds,
   getShowStoryIds,
   getJobStoryIds
-} from '../apis/hn';
+} from './apis/hn';
 
 import {
   graphql,
