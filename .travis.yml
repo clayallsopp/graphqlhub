@@ -5,9 +5,9 @@ before_install:
   - npm install -g npm@3.5.3
 install:
   - npm install
-  - cd ./graphqlhub-schemas && npm install
+  - cd ./graphqlhub-schemas && npm install && cd ..
 before_deploy:
-  - [ ! -z ${TRAVIS_TAG+x} ] && cd ./graphqlhub-schemas || true 
+  - [ ! -z ${TRAVIS_TAG+x} ] && cd ./graphqlhub-schemas || true
 deploy:
   - provider: heroku
     api_key:
