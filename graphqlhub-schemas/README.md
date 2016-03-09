@@ -4,14 +4,16 @@
 $ npm i graphqlhub-schemas --save
 
 import { Reddit } from 'graphqlhub-schemas';
-import { GraphQLSchema } from 'graphql';
-import graphqlHTTP from 'express-graphql';
+import { GraphQLSchema, graphql } from 'graphql';
 
 let schema = new GraphQLSchema({
-  query: Reddit.query
+  query: Reddit.query.type
 });
 
-app.use('/graphql', graphqlHTTP({ schema }));
+let query = ' { user(username: "kn0thing") { username } } ';
+graphql(schema, query).then((result) => {
+  console.log(result);
+});
 ```
 
 ## Available schemas
@@ -22,9 +24,8 @@ Each schema file exports an object that looks like:
 import { <Schema> as Schema } from 'graphqlhub-schemas';
 
 let { query } = Schema;
-let { type, resolve } = query;
+let { type } = query;
 // type is a GraphQLObjectType
-// resolve is an empty function
 ```
 
 See [src/index.js](src/index.js) from available schemas.
