@@ -19,7 +19,7 @@ deploy:
     on:
       condition: -z ${TRAVIS_TAG+x}
   - provider: script
-    email: scripts/publish-npm.sh
+    script: ./scripts/publish-npm.sh
     on:
       tags: true
       repo: clayallsopp/graphqlhub
