@@ -1,9 +1,14 @@
 {
   "name": "graphqlhub-schemas",
   "repository": "clayallsopp/graphqlhub",
-  "version": "0.1.0-rc4",
+  "version": "0.1.0-rc5",
   "description": "GraphQL Schemas for REST APIs like Github, Hacker News, Reddit, and Twitter",
   "main": "lib/index.js",
+  "files": [
+    "lib",
+    "in-publish.js",
+    "README.md"
+  ],
   "scripts": {
     "test": "node test.js",
     "bundle": "./node_modules/.bin/babel src --out-dir lib --ignore **/__tests__/**",
