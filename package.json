@@ -7,7 +7,7 @@
   "scripts": {
     "test": "cd ./graphqlhub-schemas && npm test && cd ..",
     "start": "DEBUG=express:* nodemon entrypoint.js",
-    "postinstall": "cd ./node_modules/graphqlhub-schemas && npm run bundle && cd .."
+    "postinstall": "npm link ./graphqlhub-schemas && cd ./node_modules/graphqlhub-schemas && npm run bundle && cd .."
   },
   "author": "Clay Allsopp <clay.allsopp@gmail.com>",
   "license": "MIT",
@@ -23,7 +23,6 @@
     "github-api": "https://github.com/clayallsopp/github/tarball/fork",
     "graphiql": "0.2.0",
     "graphql": "0.4.17",
-    "graphqlhub-schemas": "file:./graphqlhub-schemas",
     "handlebars": "4.0.3",
     "keen-js": "3.4.0-rc2",
     "lodash": "3.10.1",
