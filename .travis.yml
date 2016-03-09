@@ -1,13 +1,16 @@
 language: node_js
 node_js:
 - '4.1'
+env:
+  global:
+    - TWITTER_CONSUMER_KEY=dummy_consumer_key
+    - TWITTER_CONSUMER_SECRET=dummy_consumer_secret
+    - secure: Cjy2HxV1fCDJCm2OtvDh5TO6gkyxVcYlWbTPz903y2gBQOIICeH6Vw31/5xq84xsTncpDxBYBldggH7ijJkmLKKUuK5TYEioJTEE9YC6saZGbr85qL0GjGWjV84g9AQCaAqfnkA1OOU8lMv1e89NsB0zsOWs3TDN2EI0VN8MMMmqGfTWJ2q9rrMUK5bci7uigkW0fms7ygqUCbkgXfuoqSQVMMTmeGESltLXrGZKjlMazz68rNcSga4zu6arqHTkIoHkZhT86/VENz0x4DSWh0hqhT16X8JgGSXWFs8zMSIs43bVv6PcNkygggOEjbKCUoKU19e+eqiiZ8yXfGIOz6g5gQ/dzpm9H8CJEE1vJ7wfwuzcv6Qm09cEN6TCgESG5eh4kXAuxwgig3yydwRn+bCK0TJzEoqRkuqFyRC7XtSAV18Z/5aFoosQWL2tEETIuN9+cHmLP0wgKtBjp+efpGt2Z3iV5xk2bAKMFGVn25yoNcEWnNJvwfo0B8UomQubznZL9dQUXdAHuWROeoqcTXJqw+j1XSvGLYKexg+OW2YQcBrSy1fK+uuso8NvrcUq8RbRhnIgEj1oXkHLdH5VK0/yU0tTZTiwyJDufDi3yhuuNpJv/Yp6ElU89zECe8VfXZ67JzMAQueX76HIQSzHih+OVMEvHA1NujXdIZxfl7Q=
 before_install:
   - npm install -g npm@3.5.3
 install:
   - npm install
   - cd ./graphqlhub-schemas && npm install && cd ..
-before_deploy:
-  - ./scripts/try-npm-publish.sh
 deploy:
   - provider: heroku
     api_key:
@@ -15,12 +18,8 @@ deploy:
     app: graphqlhub
     on:
       condition: -z ${TRAVIS_TAG+x}
-  - provider: npm
-    email: clay.allsopp@gmail.com
-    api_key:
-      secure: hMGYHqbLvjQK6L66CTWWCMqkAe0jmq/O1RYC34S5/8iR8cKMPwrknUrr/0mVMMLak7lbYCnSJFlRBN8Vy5KnXDPWXgWr2mRPoVx7tiPQ8EX49sQ067YMYPRDuZlW3StLAj96sADvah2xB9Gzk5E1oesWBr5bgMB7qVCvx9U4kGKmGoiC8Sbe4Q8mHBIL44MhvSP1Kjc+uAFOXyF2krwksmqJV9MJ/mBFXnWTqGtDZSLEQj3ocyjDOm8B/5lBEmKhqp7IfrvAks8DHZemCnuZcfyBQXeU8KYd16E846X7+0jn4VCvhix/vQYZvzLad1W+vzoeyejppIPAo4t2iLdUlGqQE8Cu8b0JXJQbVoKcE2mPypXXhDc/r7ktSC6XrYBPMMuz3xdcvjXrdfGracOSoq2mOnPBAG3IJeoWBSN2CNYOp8ofVn3FXEM+4WWGh5eBqJtERvf7GhuYUyp55Ri+aIzKGm+IoKi34nZFikSQ4t3GddHZGORNP5KXeMmCy+2uHMxtse+tMnCQ6CEyP4DOIDjkHoPyiwB1ckn7gsxxapUgix2e6QbqRY+M63gR81zlUM2XeTpzvAexuEBaeYtOfBA20+g4u/2x8b9gOBoJm0/BuGGwI07KrulfussW6tC/G4u6iAx5mAVmLaWMwVFmdk2F8nYjl5ScaMWamapb7fA=
+  - provider: script
+    email: scripts/publish-npm.sh
     on:
       tags: true
       repo: clayallsopp/graphqlhub
-env:
-  - TWITTER_CONSUMER_KEY=dummy_consumer_key TWITTER_CONSUMER_SECRET=dummy_consumer_secret
