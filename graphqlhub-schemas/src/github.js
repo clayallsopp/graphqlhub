@@ -5,7 +5,6 @@ import {
   getRepoForUser,
   getIssuesForRepo,
   getCommentsForIssue,
-  getLabelsForIssue,
 } from './apis/github';
 
 import {
