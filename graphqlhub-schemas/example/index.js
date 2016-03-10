@@ -5,7 +5,6 @@ var Reddit = graphqlhubSchemas.Reddit;
 var _graphql = require('../../node_modules/graphql');
 
 var GraphQLSchema = _graphql.GraphQLSchema;
-var GraphQLObjectType = _graphql.GraphQLObjectType;
 var graphql = _graphql.graphql;
 
 var schema = new GraphQLSchema({
