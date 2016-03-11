@@ -105,12 +105,5 @@ let mutations = {
   setValue: SetValueForKeyMutation
 };
 
-export const Schema = {
-  query : {
-    type    : keyvalueType,
-    resolve() {
-      return {};
-    }
-  },
-  mutations
-};
+export const QueryObjectType = keyvalueType;
+export const Mutations = mutations;

@@ -1,12 +1,19 @@
 import express from 'express';
 import graphqlHTTP from 'express-graphql';
+import { GraphQLSchema } from 'graphql';
 import cors from 'cors';
 import fs from 'fs';
 
 import Handlebars from 'handlebars';
 
-import { GraphQLHub as Schema } from 'graphqlhub-schemas';
+import { GraphQLHub } from 'graphqlhub-schemas';
 import instrumentationMiddleware from './graphQLInstrumentation';
+
+let Schema = new GraphQLSchema({
+  query    : GraphQLHub.QueryObjectType,
+  mutation : GraphQLHub.MutationsType,
+});
+
 
 import path from 'path';
 

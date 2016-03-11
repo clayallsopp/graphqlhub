@@ -8,7 +8,7 @@ var GraphQLSchema = _graphql.GraphQLSchema;
 var graphql = _graphql.graphql;
 
 var schema = new GraphQLSchema({
-  query: Reddit.query.type
+  query: Reddit.QueryObjectType
 });
 
 var query = ' { user(username: "kn0thing") { username }  }';

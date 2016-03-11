@@ -292,11 +292,4 @@ let hnType = new GraphQLObjectType({
   }
 })
 
-export const Schema = {
-  query: {
-    type : hnType,
-    resolve() {
-      return {};
-    },
-  },
-};
+export const QueryObjectType = hnType;

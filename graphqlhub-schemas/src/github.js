@@ -186,11 +186,4 @@ let githubType = new GraphQLObjectType({
   }
 });
 
-export const Schema = {
-  query : {
-    type    : githubType,
-    resolve() {
-      return {};
-    }
-  }
-};
+export const QueryObjectType = githubType;

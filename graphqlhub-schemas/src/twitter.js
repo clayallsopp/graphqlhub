@@ -176,11 +176,4 @@ let twitterType = new GraphQLObjectType({
   }
 });
 
-export const Schema = {
-  query: {
-    type: twitterType,
-    resolve() {
-      return {};
-    }
-  }
-};
+export const QueryObjectType = twitterType;
