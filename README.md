@@ -2,6 +2,10 @@
   <img src="public/images/graphqlhub-logo.png" alt="GraphQLHub Logo" width="305" height="300"/>
 </p>
 
+# GraphQLHub Schemas
+
+Want to install the various GraphQLHub schemas and use on your own? See [graphqlhub-schemas/README.md](graphqlhub-schemas/README.md) for details
+
 # GraphQLHub Server [![Build Status](https://travis-ci.org/clayallsopp/graphqlhub.svg)](https://travis-ci.org/clayallsopp/graphqlhub)
 
 This powers the server behind [GraphQLHub](http://www.graphqlhub.com/). It's basically:
@@ -28,10 +32,10 @@ git clone https://github.com/clayallsopp/graphqlhub.git
 # change into the repo directory
 cd graphqlhub
 
-# install 
+# install
 npm install
 
-# create your .env file 
+# create your .env file
 cp .env.example .env
 # ... and populate .env with your API keys
 
@@ -39,7 +43,7 @@ cp .env.example .env
 npm run start
 ```
 
-Then visit [http://localhost:3000](http://localhost:3000) in your browser. 
+Then visit [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## TODO
 
