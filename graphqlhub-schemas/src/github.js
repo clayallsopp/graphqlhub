@@ -91,6 +91,15 @@ let IssueCommentType = new GraphQLObjectType({
   },
 });
 
+let IssueLabelType = new GraphQLObjectType({
+  name : 'GithuIssueLabelType',
+  fields: {
+    url : { type : GraphQLString },
+    name : { type : GraphQLString },
+    color: { type : GraphQLString }
+  }
+});
+
 let grabUsernameAndReponameFromURL = (url) => {
   let array = url.split('/repos/')[1].split('/issues')[0].split('/');
   return {
@@ -103,8 +112,13 @@ let IssueType = new GraphQLObjectType({
   name : 'GithubIssue',
   fields : {
     id : { type : GraphQLInt },
+    state: { type : GraphQLString },
     title : { type : GraphQLString },
     body : { type : GraphQLString },
+    user : { type : UserType },
+    assignee : { type : UserType },
+    closed_by : { type : UserType },
+    labels : { type : new GraphQLList(IssueLabelType) },
     commentCount : {
       type : GraphQLInt,
       resolve(issue) {
