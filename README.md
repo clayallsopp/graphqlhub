@@ -4,7 +4,7 @@
 
 # GraphQLHub Schemas
 
-Want to install the various GraphQLHub schemas and use on your own? See [graphqlhub-schemas/README.md](graphqlhub-schemas/README.md) for details
+Want to install the various GraphQLHub schemas and use on your own? See [graphqlhub-schemas](./graphqlhub-schemas) for details.
 
 # GraphQLHub Server [![Build Status](https://travis-ci.org/clayallsopp/graphqlhub.svg)](https://travis-ci.org/clayallsopp/graphqlhub)
 
