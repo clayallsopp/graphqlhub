@@ -5,11 +5,11 @@ import {
   GraphQLString
 } from 'graphql';
 
-import { Schema as HN } from './hn';
-import { Schema as REDDIT } from './reddit';
-import { Schema as KEYVALUE } from './keyvalue';
-import { Schema as GITHUB } from './github';
-import { Schema as TWITTER } from './twitter';
+import * as HN from './hn';
+import * as REDDIT from './reddit';
+import * as KEYVALUE from './keyvalue';
+import * as GITHUB from './github';
+import * as TWITTER from './twitter';
 
 let schemas = {
   hn : HN,
@@ -31,25 +31,33 @@ let FIELDS = {
 let MUTATION_FIELDS = {};
 
 Object.keys(schemas).forEach((schemaName) => {
-  let { mutations } = schemas[schemaName];
+  let { Mutations } = schemas[schemaName];
+  let mutations = Mutations;
   if (mutations) {
     Object.keys(mutations).forEach((mutationName) => {
       let fixedName = `${schemaName}_${mutationName}`;
       MUTATION_FIELDS[fixedName] = mutations[mutationName];
     });
   }
-  FIELDS[schemaName] = schemas[schemaName].query;
+  FIELDS[schemaName] = {
+    type : schemas[schemaName].QueryObjectType,
+    resolve() {
+      return {};
+    }
+  };
 });
 
-export let Schema = new GraphQLSchema({
-  query: new GraphQLObjectType({
-    name   : 'GraphQLHubAPI',
-    description : 'APIs exposed as GraphQL',
-    fields : () => FIELDS,
-  }),
-  mutation: new GraphQLObjectType({
-    name : 'GraphQLHubMutationAPI',
-    description : 'APIs exposed as GraphQL mutations',
-    fields : () => MUTATION_FIELDS,
-  }),
+let queryObjectType = new GraphQLObjectType({
+  name   : 'GraphQLHubAPI',
+  description : 'APIs exposed as GraphQL',
+  fields : () => FIELDS,
 });
+
+let mutationsType = new GraphQLObjectType({
+  name : 'GraphQLHubMutationAPI',
+  description : 'APIs exposed as GraphQL mutations',
+  fields : () => MUTATION_FIELDS,
+});
+
+export const QueryObjectType = queryObjectType;
+export const MutationsType = mutationsType;

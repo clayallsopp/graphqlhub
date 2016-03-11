@@ -350,11 +350,4 @@ let redditType = new GraphQLObjectType({
   }
 });
 
-export const Schema = {
-  query: {
-    type : redditType,
-    resolve() {
-      return {};
-    }
-  },
-};
+export const QueryObjectType = redditType;
