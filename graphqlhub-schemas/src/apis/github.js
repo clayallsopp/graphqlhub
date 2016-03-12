@@ -33,10 +33,14 @@ export let getReposForUser = (username) => {
   });
 };
 
-export let getCommitsForRepo = (username, reponame) => {
+export let getCommitsForRepo = (username, reponame, options = {}) => {
   let repo = github.getRepo(username, reponame);
+  let params = {};
+  if (options.limit) params.perpage = 1;
+  if (options.path) params.path = options.path;
+
   return new Promise((resolve, reject) => {
-    repo.getCommits({}, (err, commits) => {
+    repo.getCommits(params, (err, commits) => {
       if (commits) {
         resolve(commits);
       }
@@ -81,6 +85,20 @@ export let getCommentsForIssue = (username, reponame, issue) => {
     issues.getComments(issue, (err, comments) => {
       if (comments) {
         resolve(comments);
+      }
+      else {
+        reject(err);
+      }
+    });
+  });
+}
+
+export let getTreeForRepo = (username, reponame, tree) => {
+  return new Promise((resolve, reject) => {
+    github.getRepo(username, reponame)
+    .getTree(tree, (err, result) => {
+      if (result) {
+        resolve(result);
       }
       else {
         reject(err);
