@@ -67,7 +67,7 @@ let TreeEntryType = new GraphQLObjectType({
       path: {
         type: GraphQLString
       },
-      commit: {
+      last_commit: {
         type: CommitType,
         resolve(data) {
           const path = data.path;
@@ -84,7 +84,7 @@ let TreeType = new GraphQLObjectType({
   name: 'GithubTree',
   fields() {
     return {
-      files: {
+      entries: {
         type: new GraphQLList(TreeEntryType),
         resolve(data) {
           return data;
@@ -151,7 +151,7 @@ let IssueLabelType = new GraphQLObjectType({
   }
 });
 
-let grabUsernameAndReponameFromURL = (url, resource = 'issues') => {
+let grabUsernameAndReponameFromURL = (url, resource) => {
   let array = url.split('/repos/')[1].split('/' + resource)[0].split('/');
   return {
     username : array[0],
@@ -179,7 +179,7 @@ let IssueType = new GraphQLObjectType({
     comments : {
       type : new GraphQLList(IssueCommentType),
       resolve(issue) {
-        let { username, reponame } = grabUsernameAndReponameFromURL(issue.url);
+        let { username, reponame } = grabUsernameAndReponameFromURL(issue.url, 'issues');
         return getCommentsForIssue(username, reponame, issue);
       }
     }
