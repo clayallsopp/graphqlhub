@@ -36,7 +36,7 @@ export let getReposForUser = (username) => {
 export let getCommitsForRepo = (username, reponame, options = {}) => {
   let repo = github.getRepo(username, reponame);
   let params = {};
-  if (options.limit) params.perpage = 1;
+  if (options.limit) params.perpage = options.limit;
   if (options.path) params.path = options.path;
 
   return new Promise((resolve, reject) => {

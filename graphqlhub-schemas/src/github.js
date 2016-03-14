@@ -71,7 +71,7 @@ let TreeEntryType = new GraphQLObjectType({
         type: CommitType,
         resolve(data) {
           const path = data.path;
-          const { username, reponame } = grabUsernameAndReponameFromURL(data.url, 'git');
+          const { username, reponame } = grabUsernameAndReponameFromURL(data.url);
           return getCommitsForRepo(username, reponame, { path, limit: 1 })
           .then(list => list[0]); // just the commit object
         }
@@ -120,7 +120,7 @@ let CommitType = new GraphQLObjectType({
           if (!commit.commit) return null;
 
           const { tree } = commit.commit;
-          const { username, reponame } = grabUsernameAndReponameFromURL(tree.url, 'git');
+          const { username, reponame } = grabUsernameAndReponameFromURL(tree.url);
           return commit.commit && getTreeForRepo(username, reponame, tree.sha);
         }
       }
@@ -151,8 +151,8 @@ let IssueLabelType = new GraphQLObjectType({
   }
 });
 
-let grabUsernameAndReponameFromURL = (url, resource) => {
-  let array = url.split('/repos/')[1].split('/' + resource)[0].split('/');
+let grabUsernameAndReponameFromURL = (url) => {
+  let array = url.split('https://api.github.com/repos/')[1].split('/');
   return {
     username : array[0],
     reponame : array[1],
@@ -179,7 +179,7 @@ let IssueType = new GraphQLObjectType({
     comments : {
       type : new GraphQLList(IssueCommentType),
       resolve(issue) {
-        let { username, reponame } = grabUsernameAndReponameFromURL(issue.url, 'issues');
+        let { username, reponame } = grabUsernameAndReponameFromURL(issue.url);
         return getCommentsForIssue(username, reponame, issue);
       }
     }
@@ -216,6 +216,9 @@ let RepoType = new GraphQLObjectType({
           return issues;
         });
       }
+    },
+    owner: {
+      type: UserType
     }
   }
 });
