@@ -6,7 +6,7 @@ import fs from 'fs';
 
 import Handlebars from 'handlebars';
 
-import { GraphQLHub } from 'graphqlhub-schemas';
+import { GraphQLHub } from '../graphqlhub-schemas';
 import instrumentationMiddleware from './graphQLInstrumentation';
 
 let Schema = new GraphQLSchema({

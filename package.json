@@ -7,8 +7,7 @@
   "scripts": {
     "test": "cd ./graphqlhub-schemas && npm test && cd ..",
     "start": "DEBUG=express:* nodemon entrypoint.js",
-    "postinstall": "./scripts/postinstall.sh",
-    "heroku-postbuild": "./scripts/heroku-postbuild.sh"
+    "postinstall": "./scripts/postinstall.sh"
   },
   "author": "Clay Allsopp <clay.allsopp@gmail.com>",
   "license": "MIT",
