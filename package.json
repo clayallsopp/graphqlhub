@@ -6,8 +6,7 @@
   "main": "src/server.js",
   "scripts": {
     "test": "cd ./graphqlhub-schemas && npm test && cd ..",
-    "start": "DEBUG=express:* nodemon entrypoint.js",
-    "postinstall": "./scripts/postinstall.sh"
+    "start": "DEBUG=express:* nodemon entrypoint.js"
   },
   "author": "Clay Allsopp <clay.allsopp@gmail.com>",
   "license": "MIT",
