@@ -27,15 +27,17 @@ let CDN = {
   keen         : 'https://cdnjs.cloudflare.com/ajax/libs/keen-js/3.3.0/keen.min.js',
   graphiqlCss  : 'https://cdnjs.cloudflare.com/ajax/libs/graphiql/0.6.3/graphiql.min.css',
   graphiqlJs   : 'https://cdnjs.cloudflare.com/ajax/libs/graphiql/0.6.3/graphiql.min.js',
+  normalizeCss : 'https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css',
 };
 
 let CONSTANTS = {
-  reactPath       : (IS_PROD ? CDN.react       : '/react.js'),
-  reactDomPath    : (IS_PROD ? CDN.reactDom    : '/reactDom.js'),
-  fetchPath       : (IS_PROD ? CDN.fetch       : '/fetch.js'),
-  keenPath        : (IS_PROD ? CDN.keen        : '/keen.js'),
-  graphiqlCssPath : (IS_PROD ? CDN.graphiqlCss : '/graphiql.css'),
-  graphiqlJsPath  : (IS_PROD ? CDN.graphiqlJs  : '/graphiql.js'),
+  reactPath       : (IS_PROD ? CDN.react        : '/react.js'),
+  reactDomPath    : (IS_PROD ? CDN.reactDom     : '/reactDom.js'),
+  fetchPath       : (IS_PROD ? CDN.fetch        : '/fetch.js'),
+  keenPath        : (IS_PROD ? CDN.keen         : '/keen.js'),
+  graphiqlCssPath : (IS_PROD ? CDN.graphiqlCss  : '/graphiql.css'),
+  graphiqlJsPath  : (IS_PROD ? CDN.graphiqlJs   : '/graphiql.js'),
+  normalizePath   : (IS_PROD ? CDN.normalizeCss : '/normalize.css'),
 
   keenProjectId : process.env.KEEN_PROJECT_ID,
   keenReadKey   : process.env.KEEN_READ_KEY,
