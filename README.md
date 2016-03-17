@@ -17,11 +17,11 @@ This powers the server behind [GraphQLHub](http://www.graphqlhub.com/). It's bas
 
 ## Schemas
 
-- [Hacker News](schemas/hn.js)
-- [Reddit](schemas/reddit.js)
-- [GitHub](schemas/github.js)
-- [Twitter](schemas/twitter.js)
-- [GraphQLHub](schemas/graphqlhub.js), which contains all the other schemas
+- [Hacker News](graphqlhub-schemas/src/hn.js)
+- [Reddit](graphqlhub-schemas/src/reddit.js)
+- [GitHub](graphqlhub-schemas/src/github.js)
+- [Twitter](graphqlhub-schemas/src/twitter.js)
+- [GraphQLHub](graphqlhub-schemas/src/graphqlhub.js), which contains all the other schemas
 
 ## Quick start
 
