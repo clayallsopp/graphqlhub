@@ -10,13 +10,22 @@
 <html>
   <head>
     <title>GraphQL Hub</title>
-    <link rel="stylesheet" href="/graphiql.css" />
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        width: 100%;
+      }
+    </style>
+    <link rel="stylesheet" href="{{ CONSTANTS.graphiqlCssPath }}" />
     <script src="{{ CONSTANTS.reactPath }}"></script>
+    <script src="{{ CONSTANTS.reactDomPath }}"></script>
     <script src="{{ CONSTANTS.fetchPath }}"></script>
-    <script src="/graphiql.js"></script>
+    <script src="{{ CONSTANTS.graphiqlJsPath }}"></script>
   </head>
   <body>
-    Loading...
+    <div id="app" style="height: 100%; width: 100%">Loading...</div>
     <script>
 
       /**
@@ -85,15 +94,20 @@
       }
 
       // Render <GraphiQL /> into the body.
-      React.render(
+      ReactDOM.render(
         React.createElement(GraphiQL, {
           fetcher: graphQLFetcher,
           query: parameters.query,
           variables: parameters.variables,
           onEditQuery: onEditQuery,
-          onEditVariables: onEditVariables
-        }),
-        document.body
+          onEditVariables: onEditVariables,
+          storage: undefined
+        }, [
+          React.createElement(GraphiQL.Logo, { key: 'logo' },
+            React.createElement('div', { key: 'logoDiv' }, 'GraphQLHub')
+          )
+        ]),
+        document.getElementById('app')
       );
     </script>
   </body>

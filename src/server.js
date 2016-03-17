@@ -21,15 +21,21 @@ import timingCallback from './timingCallback';
 
 let IS_PROD = (process.env.NODE_ENV === 'production');
 let CDN = {
-  react : 'https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.min.js',
-  fetch : 'https://cdnjs.cloudflare.com/ajax/libs/fetch/0.9.0/fetch.min.js',
-  keen  : 'https://cdnjs.cloudflare.com/ajax/libs/keen-js/3.3.0/keen.min.js',
+  reactDom     : 'https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react-dom.min.js',
+  react        : 'https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react.min.js',
+  fetch        : 'https://cdnjs.cloudflare.com/ajax/libs/fetch/0.9.0/fetch.min.js',
+  keen         : 'https://cdnjs.cloudflare.com/ajax/libs/keen-js/3.3.0/keen.min.js',
+  graphiqlCss  : 'https://cdnjs.cloudflare.com/ajax/libs/graphiql/0.6.3/graphiql.min.css',
+  graphiqlJs   : 'https://cdnjs.cloudflare.com/ajax/libs/graphiql/0.6.3/graphiql.min.js',
 };
 
 let CONSTANTS = {
-  reactPath : (IS_PROD ? CDN.react : '/react.js'),
-  fetchPath : (IS_PROD ? CDN.fetch : '/fetch.js'),
-  keenPath  : (IS_PROD ? CDN.keen  : '/keen.js'),
+  reactPath       : (IS_PROD ? CDN.react       : '/react.js'),
+  reactDomPath    : (IS_PROD ? CDN.reactDom    : '/reactDom.js'),
+  fetchPath       : (IS_PROD ? CDN.fetch       : '/fetch.js'),
+  keenPath        : (IS_PROD ? CDN.keen        : '/keen.js'),
+  graphiqlCssPath : (IS_PROD ? CDN.graphiqlCss : '/graphiql.css'),
+  graphiqlJsPath  : (IS_PROD ? CDN.graphiqlJs  : '/graphiql.js'),
 
   keenProjectId : process.env.KEEN_PROJECT_ID,
   keenReadKey   : process.env.KEEN_READ_KEY,
