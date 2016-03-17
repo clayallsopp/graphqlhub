@@ -6,7 +6,9 @@ A collection of GraphQL schemas for existing HTTP APIs.
 
 ```
 $ npm i graphqlhub-schemas --save
+```
 
+```js
 import { Reddit } from 'graphqlhub-schemas';
 import { GraphQLSchema, graphql } from 'graphql';
 
@@ -24,7 +26,7 @@ graphql(schema, query).then((result) => {
 
 Each schema file exports an object that looks like:
 
-```
+```js
 import { <Schema> as Schema } from 'graphqlhub-schemas';
 
 let { QueryObjectType } = Schema;
