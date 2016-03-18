@@ -6,7 +6,7 @@ import {
   getAskStoryIds,
   getShowStoryIds,
   getJobStoryIds
-} from '../apis/hn';
+} from './apis/hn';
 
 import {
   graphql,
@@ -292,11 +292,4 @@ let hnType = new GraphQLObjectType({
   }
 })
 
-export const Schema = {
-  query: {
-    type : hnType,
-    resolve() {
-      return {};
-    },
-  },
-};
+export const QueryObjectType = hnType;

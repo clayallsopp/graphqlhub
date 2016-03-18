@@ -10,40 +10,179 @@
 <html>
   <head>
     <title>GraphQL Hub</title>
+    <link rel="icon" href="/images/favicon.ico"/ >
+    <link rel="icon" href="/images/favicon@2x.ico" sizes="32x32" />
+    <link rel="stylesheet" href="{{ CONSTANTS.normalizePath }}" />
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <style>
+      html {
+        background : #FAFAFA;
+      }
+
+      .gqh-Nav {
+      }
+
+      .gqh-Content {
+        max-width : 786px;
+        margin    : 0 auto;
+        padding-top : 20px;
+        padding : 20px 20px 0px;
+      }
+
+      .gqh-LogoContainer {
+        position : relative;
+        margin-bottom : 27px;
+        float: left;
+      }
+
+      .gqh-Social {
+        float: right;
+        position: relative;
+        top : 15px;
+      }
+
+      @media (max-width: 540px) {
+        .gqh-LogoContainer {
+          float: none;
+          margin-bottom : 10px;
+        }
+        .gqh-Social {
+          float: none;
+          top: 0px;
+          margin-bottom : 27px;
+        }
+      }
+
+      .gqh-Logo {
+        display : inline-block;;
+        width : 48px;
+        vertical-align: middle;
+      }
+
+      .gqh-LogoText {
+        display: inline-block;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 24px;
+        color: #CF34A2;
+        vertical-align: middle;
+        margin-left : 12px;
+        cursor: default;
+      }
+
+      .gqh-Box {
+        background: #FFFFFF;
+        border: 1px solid #EEEEEE;
+        border-radius: 4px;
+
+        padding : 22px 20px 15px 20px;
+
+        margin-bottom : 10px;
+      }
+
+      .gqh-Subheadline {
+        margin : 0;
+        margin-bottom : 6px;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 14px;
+        color: #CF34A2;
+        font-weight: 700;
+      }
+
+      .gqh-Paragraph {
+        font-family: 'Open Sans', sans-serif;
+        color: #222222;
+      }
+
+      .gph-Bullet {
+        font-family: 'Open Sans', sans-serif;
+        color: #222222;
+      }
+
+      .gqh-Code {
+        color: #555555;
+      }
+    </style>
   </head>
-  <body style='padding: 30px; font-family: sans-serif;'>
-    <h1>GraphQLHub APIs:</h1>
-    <ul>
-      <li><a href="/playground/hn">Explore Hacker News</a></li>
-      <li><a href="/playground/reddit">Explore Reddit</a></li>
-      <li><a href="/playground/github">Explore GitHub</a></li>
-      <li><a href="/playground/twitter">Explore Twitter</a></li>
-      <li><a href="/playground/keyvalue">Explore a Relay-compatible Key-Value store</a></li>
-    </ul>
-    <p>Follow <a href="http://twitter.com/GraphQLHub">@GraphQLHub</a> for more updates. This page intentionally unstyled, for now.</p>
-    <div id="chart" style="max-width: 700px; margin: 0 auto;"></div>
+  <body>
+    <div class='gqh-Content'>
+      <nav class='gqh-Nav'>
+        <div class='gqh-LogoContainer'>
+          <img src="/images/graphqlhub-logo.png" class='gqh-Logo' /><div class='gqh-LogoText'>GraphQL<strong>Hub</strong></div>
+        </div>
+        <div class='gqh-Social'>
+          <a class="twitter-follow-button" href="https://twitter.com/GraphQLHub">Follow @GraphQLHub</a>
+        </div>
+        <div style="clear: both" />
+      </nav>
 
-    <script src="{{ CONSTANTS.keenPath }}"></script>
-    <script type="text/javascript">
-      var client = new Keen({
-        projectId: "{{ CONSTANTS.keenProjectId }}",
-        readKey: "{{ CONSTANTS.keenReadKey }}"
+      <div class='gqh-Box'>
+        <h1 class='gqh-Subheadline'>Explore</h1>
+        <p class='gqh-Paragraph'>Query popular APIs using GraphQL in your browser:</p>
+        <ul>
+          <li class='gph-Bullet'><a href="/playground/hn">Hacker News</a></li>
+          <li class='gph-Bullet'><a href="/playground/reddit">Reddit</a></li>
+          <li class='gph-Bullet'><a href="/playground/github">GitHub</a></li>
+          <li class='gph-Bullet'><a href="/playground/twitter">Twitter</a></li>
+          <li class='gph-Bullet'><a href="/playground/keyvalue">Relay-compatible Key-Value store</a></li>
+        </ul>
+      </div>
 
-      });
+      <div class='gqh-Box'>
+        <h1 class='gqh-Subheadline'>Install</h1>
+        <p class='gqh-Paragraph'>The GraphQLHub schemas are available in the <a href="https://www.npmjs.com/package/graphqlhub-schemas">graphqlhub-schemas NPM module</a>:</p>
+        <pre class='gqh-Code'>$ npm install graphqlhub-schemas --save</pre>
+      </div>
 
-      Keen.ready(function(){
-        var query = new Keen.Query("count", {
-          eventCollection: "totalDurations",
-          interval: "daily",
-          timeframe: "this_7_days",
-          timezone: "UTC"
+      <div class='gqh-Box'>
+        <h1 class='gqh-Subheadline'>Contribute</h1>
+        <p class='gqh-Paragraph'>GraphQLHub is an open-source project — if you want to add a feature, fix a bug, or just ask a question, you can reach out <a href="https://github.com/clayallsopp/graphqlhub">on Github</a>!</p>
+      </div>
+
+
+      <script>window.twttr = (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0],
+          t = window.twttr || {};
+        if (d.getElementById(id)) return t;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js, fjs);
+
+        t._e = [];
+        t.ready = function(f) {
+          t._e.push(f);
+        };
+
+        return t;
+      }(document, "script", "twitter-wjs"));</script>
+      <!--
+      // TODO - uncomment after current Keen billing period
+      <div id="chart" style="max-width: 700px; margin: 0 auto;"></div>
+
+      <script src="{{ CONSTANTS.keenPath }}"></script>
+      <script type="text/javascript">
+        var client = new Keen({
+          projectId: "{{ CONSTANTS.keenProjectId }}",
+          readKey: "{{ CONSTANTS.keenReadKey }}"
+
         });
 
-        client.draw(query, document.getElementById("chart"), {
-          title : 'Queries per Day'
-        });
+        Keen.ready(function(){
+          var query = new Keen.Query("count", {
+            eventCollection: "totalDurations",
+            interval: "daily",
+            timeframe: "this_7_days",
+            timezone: "UTC"
+          });
 
-      });
-    </script>
+          client.draw(query, document.getElementById("chart"), {
+            title : 'Queries per Day'
+          });
+
+        });
+      </script>
+
+      -->
+    </div>
   </body>
 </html>

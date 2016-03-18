@@ -1,28 +1,43 @@
 import express from 'express';
 import graphqlHTTP from 'express-graphql';
+import { GraphQLSchema } from 'graphql';
 import cors from 'cors';
 import fs from 'fs';
 
 import Handlebars from 'handlebars';
 
-import { Schema } from './schemas/graphqlhub';
-import instrumentationMiddleware from './src/graphQLInstrumentation';
+import { GraphQLHub } from '../graphqlhub-schemas';
+import instrumentationMiddleware from './graphQLInstrumentation';
+
+let Schema = new GraphQLSchema({
+  query    : GraphQLHub.QueryObjectType,
+  mutation : GraphQLHub.MutationsType,
+});
+
 
 import path from 'path';
 
-import timingCallback from './src/timingCallback';
+import timingCallback from './timingCallback';
 
 let IS_PROD = (process.env.NODE_ENV === 'production');
 let CDN = {
-  react : 'https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.min.js',
-  fetch : 'https://cdnjs.cloudflare.com/ajax/libs/fetch/0.9.0/fetch.min.js',
-  keen  : 'https://cdnjs.cloudflare.com/ajax/libs/keen-js/3.3.0/keen.min.js',
+  reactDom     : 'https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react-dom.min.js',
+  react        : 'https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react.min.js',
+  fetch        : 'https://cdnjs.cloudflare.com/ajax/libs/fetch/0.9.0/fetch.min.js',
+  keen         : 'https://cdnjs.cloudflare.com/ajax/libs/keen-js/3.3.0/keen.min.js',
+  graphiqlCss  : 'https://cdnjs.cloudflare.com/ajax/libs/graphiql/0.6.3/graphiql.min.css',
+  graphiqlJs   : 'https://cdnjs.cloudflare.com/ajax/libs/graphiql/0.6.3/graphiql.min.js',
+  normalizeCss : 'https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css',
 };
 
 let CONSTANTS = {
-  reactPath : (IS_PROD ? CDN.react : '/react.js'),
-  fetchPath : (IS_PROD ? CDN.fetch : '/fetch.js'),
-  keenPath  : (IS_PROD ? CDN.keen  : '/keen.js'),
+  reactPath       : (IS_PROD ? CDN.react        : '/react.js'),
+  reactDomPath    : (IS_PROD ? CDN.reactDom     : '/reactDom.js'),
+  fetchPath       : (IS_PROD ? CDN.fetch        : '/fetch.js'),
+  keenPath        : (IS_PROD ? CDN.keen         : '/keen.js'),
+  graphiqlCssPath : (IS_PROD ? CDN.graphiqlCss  : '/graphiql.css'),
+  graphiqlJsPath  : (IS_PROD ? CDN.graphiqlJs   : '/graphiql.js'),
+  normalizePath   : (IS_PROD ? CDN.normalizeCss : '/normalize.css'),
 
   keenProjectId : process.env.KEEN_PROJECT_ID,
   keenReadKey   : process.env.KEEN_READ_KEY,
@@ -34,8 +49,8 @@ let compileFile = function(filePath) {
 };
 
 let HTMLS = {
-  PLAYGROUND : () => compileFile(path.join(__dirname, 'public', 'playground', 'index.html')),
-  INDEX      : () => compileFile(path.join(__dirname, 'public', 'index.html')),
+  PLAYGROUND : () => compileFile(path.join(__dirname, '..', 'public', 'playground', 'index.html')),
+  INDEX      : () => compileFile(path.join(__dirname, '..', 'public', 'index.html')),
 };
 
 let CACHED_HTMLS = Object.keys(HTMLS).reduce((value, key) => {
@@ -56,7 +71,7 @@ let renderHTML = (key) => {
 let app = express();
 app.get('/playground', renderHTML('PLAYGROUND'));
 app.get('/', renderHTML('INDEX'));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use('/graphql', cors(), instrumentationMiddleware(Schema, timingCallback, { addToResponse : false }), graphqlHTTP((req, res) => {
   return { schema: Schema, rootValue : req.rootValue }
 }));

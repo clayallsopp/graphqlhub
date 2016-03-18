@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import * as twitter from '../apis/twitter';
+import * as twitter from './apis/twitter';
 
 import {
   GraphQLSchema,
@@ -176,11 +176,4 @@ let twitterType = new GraphQLObjectType({
   }
 });
 
-export const Schema = {
-  query: {
-    type: twitterType,
-    resolve() {
-      return {};
-    }
-  }
-};
+export const QueryObjectType = twitterType;

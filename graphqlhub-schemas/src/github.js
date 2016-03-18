@@ -5,7 +5,8 @@ import {
   getRepoForUser,
   getIssuesForRepo,
   getCommentsForIssue,
-} from '../apis/github';
+  getTreeForRepo,
+} from './apis/github';
 
 import {
   graphql,
@@ -59,6 +60,40 @@ let UserOrCommitAuthorType = new GraphQLUnionType({
   types: [ CommitAuthorType, UserType ]
 });
 
+let TreeEntryType = new GraphQLObjectType({
+  name: 'GithubTreeEntry',
+  fields() {
+    return {
+      path: {
+        type: GraphQLString
+      },
+      last_commit: {
+        type: CommitType,
+        resolve(data) {
+          const path = data.path;
+          const { username, reponame } = grabUsernameAndReponameFromURL(data.url);
+          return getCommitsForRepo(username, reponame, { path, limit: 1 })
+          .then(list => list[0]); // just the commit object
+        }
+      }
+    };
+  }
+})
+
+let TreeType = new GraphQLObjectType({
+  name: 'GithubTree',
+  fields() {
+    return {
+      entries: {
+        type: new GraphQLList(TreeEntryType),
+        resolve(data) {
+          return data;
+        }
+      }
+    };
+  }
+});
+
 let CommitType = new GraphQLObjectType({
   name : 'GithubCommit',
   fields() {
@@ -71,6 +106,22 @@ let CommitType = new GraphQLObjectType({
         type : GraphQLString,
         resolve(commit) {
           return commit.commit && commit.commit.message;
+        }
+      },
+      date : {
+        type : GraphQLString,
+        resolve(commit) {
+          return commit.commit && commit.commit.committer.date;
+        }
+      },
+      tree: {
+        type: TreeType,
+        resolve(commit) {
+          if (!commit.commit) return null;
+
+          const { tree } = commit.commit;
+          const { username, reponame } = grabUsernameAndReponameFromURL(tree.url);
+          return commit.commit && getTreeForRepo(username, reponame, tree.sha);
         }
       }
     };
@@ -91,8 +142,17 @@ let IssueCommentType = new GraphQLObjectType({
   },
 });
 
+let IssueLabelType = new GraphQLObjectType({
+  name : 'GithuIssueLabelType',
+  fields: {
+    url : { type : GraphQLString },
+    name : { type : GraphQLString },
+    color: { type : GraphQLString }
+  }
+});
+
 let grabUsernameAndReponameFromURL = (url) => {
-  let array = url.split('/repos/')[1].split('/issues')[0].split('/');
+  let array = url.split('https://api.github.com/repos/')[1].split('/');
   return {
     username : array[0],
     reponame : array[1],
@@ -103,8 +163,13 @@ let IssueType = new GraphQLObjectType({
   name : 'GithubIssue',
   fields : {
     id : { type : GraphQLInt },
+    state: { type : GraphQLString },
     title : { type : GraphQLString },
     body : { type : GraphQLString },
+    user : { type : UserType },
+    assignee : { type : UserType },
+    closed_by : { type : UserType },
+    labels : { type : new GraphQLList(IssueLabelType) },
     commentCount : {
       type : GraphQLInt,
       resolve(issue) {
@@ -129,8 +194,13 @@ let RepoType = new GraphQLObjectType({
     name : { type : GraphQLString },
     commits : {
       type : new GraphQLList(CommitType),
-      resolve(repo) {
-        return getCommitsForRepo(repo.owner.login, repo.name);
+      args : {
+        limit: {
+          type: GraphQLInt
+        }
+      },
+      resolve(repo, args) {
+        return getCommitsForRepo(repo.owner.login, repo.name, args);
       }
     },
     issues : {
@@ -146,6 +216,9 @@ let RepoType = new GraphQLObjectType({
           return issues;
         });
       }
+    },
+    owner: {
+      type: UserType
     }
   }
 });
@@ -186,11 +259,4 @@ let githubType = new GraphQLObjectType({
   }
 });
 
-export const Schema = {
-  query : {
-    type    : githubType,
-    resolve() {
-      return {};
-    }
-  }
-};
+export const QueryObjectType = githubType;

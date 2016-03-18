@@ -3,7 +3,7 @@ import {
   getSubreddit,
   getSubredditListings,
   getComments
-} from '../apis/reddit';
+} from './apis/reddit';
 
 import {
   graphql,
@@ -350,11 +350,4 @@ let redditType = new GraphQLObjectType({
   }
 });
 
-export const Schema = {
-  query: {
-    type : redditType,
-    resolve() {
-      return {};
-    }
-  },
-};
+export const QueryObjectType = redditType;

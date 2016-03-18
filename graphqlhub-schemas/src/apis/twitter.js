@@ -6,11 +6,19 @@ const {
   TWITTER_CONSUMER_SECRET
 } = process.env;
 
-const Twitter = new Twit({
-  consumer_key        : TWITTER_CONSUMER_KEY,
-  consumer_secret     : TWITTER_CONSUMER_SECRET,
-  app_only_auth       : true
-});
+// Twit throws a runtime error if you try to create a client
+// without API keys, so we do it lazily
+let twitterClient = undefined;
+const getTwitterClient = () => {
+  if (!twitterClient) {
+    twitterClient = new Twit({
+      consumer_key        : TWITTER_CONSUMER_KEY,
+      consumer_secret     : TWITTER_CONSUMER_SECRET,
+      app_only_auth       : true
+    });
+  }
+  return twitterClient;
+};
 
 export const getUser = (identifier, identity) => __getPromise('users/show', { [identifier]: identity });
 export const getTweets = (user_id, count)     => __getPromise('statuses/user_timeline', { user_id, count });
@@ -22,7 +30,7 @@ const __getPromise = (endpoint, parameters, resultPath = null) => {
 
   return new Promise((resolve, reject) => {
 
-    Twitter.get(
+    getTwitterClient().get(
       endpoint,
       parameters,
       (error, result) => {
