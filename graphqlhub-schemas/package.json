@@ -12,11 +12,13 @@
   "scripts": {
     "test": "node test.js",
     "bundle": "./node_modules/.bin/babel src --out-dir lib --ignore **/__tests__/**",
-    "prepublish": "./in-publish.js && npm run bundle || exit 0"
+    "prepublish": "./in-publish.js && npm run bundle || exit 0",
+    "watch": "./node_modules/.bin/babel src --watch --out-dir lib --ignore **/__tests__/**"
   },
   "author": "Clay Allsopp <clay.allsopp@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "giphy-api": "1.1.14",
     "github-api": "https://github.com/clayallsopp/github/tarball/fork",
     "graphql-relay": "0.3.6",
     "lodash": "3.10.1",

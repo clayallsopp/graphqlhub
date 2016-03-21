@@ -4,4 +4,4 @@ const giphy = giphyFactory({
   apiKey : process.env.GIPHY_API_KEY
 });
 
-export giphy as default;
+export { giphy as default };
