@@ -10,13 +10,15 @@ import * as REDDIT from './reddit';
 import * as KEYVALUE from './keyvalue';
 import * as GITHUB from './github';
 import * as TWITTER from './twitter';
+import * as GIPHY from './giphy';
 
 let schemas = {
   hn : HN,
   reddit : REDDIT,
   keyValue : KEYVALUE,
   github : GITHUB,
-  twitter: TWITTER
+  twitter: TWITTER,
+  giphy: GIPHY,
 };
 
 let FIELDS = {
