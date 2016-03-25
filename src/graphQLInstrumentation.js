@@ -2,7 +2,7 @@
 // http://hueypetersen.com/posts/2015/11/06/instrumenting-graphql-js/
 // https://github.com/graphql/graphql-js/issues/109
 
-import { GraphQLObjectType, GraphQLScalarType } from 'graphql/type/definition';
+import { GraphQLObjectType } from 'graphql/type/definition';
 
 function defaultResolveFn(source, args, { fieldName }) {
   var property = source[fieldName];
