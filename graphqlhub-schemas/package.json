@@ -18,6 +18,7 @@
   "author": "Clay Allsopp <clay.allsopp@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "fb": "1.1.0-alpha1",
     "giphy-api": "1.1.14",
     "github-api": "https://github.com/clayallsopp/github/tarball/fork",
     "graphql-relay": "0.3.6",

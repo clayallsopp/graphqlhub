@@ -11,6 +11,7 @@ import * as KEYVALUE from './keyvalue';
 import * as GITHUB from './github';
 import * as TWITTER from './twitter';
 import * as GIPHY from './giphy';
+import * as FACEBOOK from './facebook';
 
 let schemas = {
   hn : HN,
@@ -19,6 +20,7 @@ let schemas = {
   github : GITHUB,
   twitter: TWITTER,
   giphy: GIPHY,
+  facebook: FACEBOOK,
 };
 
 let FIELDS = {
@@ -43,6 +45,7 @@ Object.keys(schemas).forEach((schemaName) => {
   }
   FIELDS[schemaName] = {
     type : schemas[schemaName].QueryObjectType,
+    args : schemas[schemaName].QueryArgsType,
     resolve() {
       return {};
     }

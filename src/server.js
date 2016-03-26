@@ -103,6 +103,7 @@ let SHORTCUTS = {
   ,
   giphy    : '/playground?query=%23%20Hit%20the%20Play%20button%20above!%0A%23%20Hit%20"Docs"%20on%20the%20right%20to%20explore%20the%20API%0A%0A%7B%0A%20%20graphQLHub%0A%20%20giphy%20%7B%0A%09%09random(tag%3A"javascript")%20%7B%0A%20%20%20%20%09id%0A%20%20%20%20%20%20url%0A%20%20%20%20%20%20images%20%7B%0A%20%20%20%20%20%20%20%20original%20%7B%0A%20%20%20%20%20%20%20%20%20%20url%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%09%7D%0A%20%20%7D%0A%7D'
   ,
+  facebook : '/playground?query=%23%20Hit%20the%20Play%20button%20above!%0A%23%20Hit%20"Docs"%20on%20the%20right%20to%20explore%20the%20API%0A%0Aquery%20(%24facebookToken%3A%20String!)%7B%0A%20%20graphQLHub%0A%09facebook(token%3A%20%24facebookToken)%20%7B%0A%09%09node(id%3A%20"4")%20%7B%0A%09%09%09id%0A%20%20%20%20%20%20...%20on%20FacebookUser%20%7B%0A%20%20%20%20%20%20%20%20name%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%20%20%0A%7D&variables=%7B%0A%20%20"facebookToken"%3A"Get%20an%20API%20token%2C%20i.e.%20from%20https%3A%2F%2Fdevelopers.facebook.com%2Ftools%2Fexplorer"%0A%7D'
 };
 Object.keys(SHORTCUTS).forEach((shortcut) => {
   app.get(`/playground/${shortcut}`, (req, res) => {
