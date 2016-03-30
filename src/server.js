@@ -1,6 +1,6 @@
 import express from 'express';
 import graphqlHTTP from 'express-graphql';
-import { GraphQLSchema } from 'graphql';
+import { GraphQLSchema, printSchema } from 'graphql';
 import cors from 'cors';
 import fs from 'fs';
 
@@ -93,6 +93,11 @@ let SHORTCUTS = {
 Object.keys(SHORTCUTS).forEach((shortcut) => {
   app.get(`/playground/${shortcut}`, (req, res) => {
     res.redirect(SHORTCUTS[shortcut]);
+  });
+  app.get(`/schema/${shortcut}`, (req, res) => {
+    let field = GraphQLHub.QueryObjectType.getFields()[shortcut];
+    res.set('Content-Type', 'text/plain');
+    res.send(printSchema(new GraphQLSchema({ query: field.type })));
   });
 });
 
