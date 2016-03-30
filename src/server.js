@@ -68,12 +68,26 @@ let renderHTML = (key) => {
   };
 };
 
+let formatError = (error) => {
+  return {
+    message: error.message,
+    details: error.stack
+  };
+};
+if (IS_PROD) {
+  formatError = undefined;
+}
+
 let app = express();
 app.get('/playground', renderHTML('PLAYGROUND'));
 app.get('/', renderHTML('INDEX'));
 app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use('/graphql', cors(), instrumentationMiddleware(Schema, timingCallback, { addToResponse : false }), graphqlHTTP((req, res) => {
-  return { schema: Schema, rootValue : req.rootValue }
+  return {
+    schema: Schema,
+    rootValue: req.rootValue,
+    formatError: formatError,
+  };
 }));
 
 let SHORTCUTS = {
