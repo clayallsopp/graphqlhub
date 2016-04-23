@@ -87,6 +87,7 @@ app.use('/graphql', cors(), instrumentationMiddleware(Schema, timingCallback, { 
     schema: Schema,
     rootValue: req.rootValue,
     formatError: formatError,
+    pretty: req.query.pretty,
   };
 }));
 
