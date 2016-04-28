@@ -6,6 +6,7 @@ import {
 } from 'graphql';
 
 import * as HN from './hn';
+import * as HN2 from './hn2';
 import * as REDDIT from './reddit';
 import * as KEYVALUE from './keyvalue';
 import * as GITHUB from './github';
@@ -14,6 +15,7 @@ import * as GIPHY from './giphy';
 
 let schemas = {
   hn : HN,
+  hn2 : HN2,
   reddit : REDDIT,
   keyValue : KEYVALUE,
   github : GITHUB,
