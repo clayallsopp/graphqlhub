@@ -28,7 +28,7 @@ import {
   globalIdField,
   connectionDefinitions,
   connectionArgs,
-  connectionFromPromisedArray
+  connectionFromArray
 } from 'graphql-relay';
 
 const itemTypeName = 'item';
@@ -41,15 +41,28 @@ const getConnectionType = (nodeType) => {
   return ConnectionTypes[nodeType];
 }
 
+const connectionFromIdsArray = (allIds, args, resolveIds) => {
+  let connection = connectionFromArray(allIds || [], args);
+  let ids = connection.edges.map((edge) => edge.node);
+  let promise = Promise.resolve(resolveIds(ids));
+
+  return promise.then((values) => {
+    connection.edges.forEach((edge, index) => {
+      edge.node = values[index];
+    });
+    return connection;
+  });
+};
+
 const kidsField = () => {
   return {
     type : getConnectionType(CommentType),
     description : 'The item\'s comments, in ranked display order.',
     args : connectionArgs,
     resolve : (item, args) => {
-      // todo - trim initial kids array so we don't over-fetch
-      let kidsPromise = Promise.all(item.kids.map(getItem))
-      return connectionFromPromisedArray(kidsPromise, args)
+      return connectionFromIdsArray(item.kids, args, (ids) => {
+        return Promise.all(ids.map(getItem));
+      });
     }
   };
 };
@@ -278,9 +291,9 @@ const UserType = new GraphQLObjectType({
       description: 'List of the user\'s stories, polls and comments.',
       args : connectionArgs,
       resolve : (user, args) => {
-        // todo - trim initial kids array so we don't over-fetch
-        let promise = Promise.all(user.submitted.map(getItem))
-        return connectionFromPromisedArray(promise, args)
+        return connectionFromIdsArray(user.submitted, args, (ids) => {
+          return Promise.all(ids.map(getItem));
+        });
       }
     }
   }),
