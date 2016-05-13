@@ -38,6 +38,7 @@ export let getCommitsForRepo = (username, reponame, options = {}) => {
   let params = {};
   if (options.limit) params.perpage = options.limit;
   if (options.path) params.path = options.path;
+  if (options.sha) params.sha = options.sha;
 
   return new Promise((resolve, reject) => {
     repo.getCommits(params, (err, commits) => {
