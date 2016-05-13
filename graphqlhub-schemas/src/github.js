@@ -188,6 +188,14 @@ let IssueType = new GraphQLObjectType({
 });
 
 
+let BranchType = new GraphQLObjectType({
+  name : 'GitBranch',
+  fields : {
+    name : { type : GraphQLString },
+    }
+  }
+});
+
 let RepoType = new GraphQLObjectType({
   name : 'GithubRepo',
   fields : {
@@ -219,14 +227,14 @@ let RepoType = new GraphQLObjectType({
       }
     },
     branches : {
-      type : new GraphQLList(GraphQLString),
+      type : new GraphQLList(BranchType),
       args : {
         limit : { type : GraphQLInt }
       },
       resolve(repo, { limit }) {
         return getBranchesForRepo(repo.owner.login, repo.name).then((branches) => {
           if (limit) {
-            // optimise query...
+            // Later: optimise query...
             return branches.slice(0, limit);
           }
           return branches;
