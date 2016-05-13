@@ -6,6 +6,7 @@ import {
   getIssuesForRepo,
   getCommentsForIssue,
   getTreeForRepo,
+  getBranchesForRepo,
 } from './apis/github';
 
 import {
@@ -214,6 +215,21 @@ let RepoType = new GraphQLObjectType({
             return issues.slice(0, limit);
           }
           return issues;
+        });
+      }
+    },
+    branches : {
+      type : new GraphQLList(GraphQLString),
+      args : {
+        limit : { type : GraphQLInt }
+      },
+      resolve(repo, { limit }) {
+        return getBranchesForRepo(repo.owner.login, repo.name).then((branches) => {
+          if (limit) {
+            // optimise query...
+            return branches.slice(0, limit);
+          }
+          return branches;
         });
       }
     },

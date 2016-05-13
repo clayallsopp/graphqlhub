@@ -51,6 +51,22 @@ export let getCommitsForRepo = (username, reponame, options = {}) => {
   });
 };
 
+
+export let getBranchesForRepo = (username, reponame, options = {}) => {
+  let repo = github.getRepo(username, reponame);
+  let params = {};
+  return new Promise((resolve, reject) => {
+    repo.listBranches((err, branches) => {
+      if (branches) {
+        resolve(branches);
+      }
+      else {
+        reject(err);
+      }
+    });
+  });
+};
+
 export let getRepoForUser = (username, reponame) => {
   let repo = github.getRepo(username, reponame);
   return new  Promise((resolve, reject) => {
