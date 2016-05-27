@@ -143,7 +143,7 @@ let IssueCommentType = new GraphQLObjectType({
 });
 
 let IssueLabelType = new GraphQLObjectType({
-  name : 'GithuIssueLabelType',
+  name : 'GithubIssueLabelType',
   fields: {
     url : { type : GraphQLString },
     name : { type : GraphQLString },
