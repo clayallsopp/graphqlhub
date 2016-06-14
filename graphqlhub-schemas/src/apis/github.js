@@ -38,11 +38,39 @@ export let getCommitsForRepo = (username, reponame, options = {}) => {
   let params = {};
   if (options.limit) params.perpage = options.limit;
   if (options.path) params.path = options.path;
+  if (options.sha) params.sha = options.sha;
 
   return new Promise((resolve, reject) => {
     repo.getCommits(params, (err, commits) => {
       if (commits) {
         resolve(commits);
+      }
+      else {
+        reject(err);
+      }
+    });
+  });
+};
+
+let getBranchesLastCommits = (repo, branchNames) => {
+  return branchNames.map((name) => new Promise((resolve, reject) => {
+    repo.getRef('heads/' + name, (err, sha) => {
+      if (sha) {
+        resolve({ name, sha });
+      }
+      else {
+        reject(err);
+      }
+    });
+  }));
+};
+
+export let getBranchesForRepo = (username, reponame) => {
+  let repo = github.getRepo(username, reponame);
+  return new Promise((resolve, reject) => {
+    repo.listBranches((err, branches) => {
+      if (branches) {
+        resolve(Promise.all(getBranchesLastCommits(repo, branches)));
       }
       else {
         reject(err);

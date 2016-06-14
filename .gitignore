@@ -157,3 +157,6 @@ sftp-config.json
 
 .env
 dist/
+
+## graphql - generated code
+*-compiled.js*

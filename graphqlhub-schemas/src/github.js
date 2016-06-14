@@ -6,6 +6,7 @@ import {
   getIssuesForRepo,
   getCommentsForIssue,
   getTreeForRepo,
+  getBranchesForRepo,
 } from './apis/github';
 
 import {
@@ -187,6 +188,21 @@ let IssueType = new GraphQLObjectType({
 });
 
 
+let BranchType = new GraphQLObjectType({
+  name : 'GitBranch',
+  fields : {
+    name : { type : GraphQLString },
+    last_commit: {
+      type: CommitType,
+      resolve: (branch) => {
+        const { ownerUsername, reponame } = branch; // info has been added while loading
+        return getCommitsForRepo(ownerUsername, reponame, { sha: branch.sha })
+            .then(list => list[0]); // just the commit object
+      }
+    }
+  }
+});
+
 let RepoType = new GraphQLObjectType({
   name : 'GithubRepo',
   fields : {
@@ -214,6 +230,26 @@ let RepoType = new GraphQLObjectType({
             return issues.slice(0, limit);
           }
           return issues;
+        });
+      }
+    },
+    branches : {
+      type : new GraphQLList(BranchType),
+      args : {
+        limit : { type : GraphQLInt }
+      },
+      resolve(repo, { limit }) {
+        const ownerUsername = repo.owner.login;
+        const reponame = repo.name;
+        return getBranchesForRepo(ownerUsername, reponame).then((branches) => {
+            // add repo referenceData
+            return branches.map( (b) => ({reponame, ownerUsername, ...b}) );
+          }).then((branches) => {
+          if (limit) {
+            // Later: optimise query...
+            return branches.slice(0, limit);
+          }
+          return branches;
         });
       }
     },
