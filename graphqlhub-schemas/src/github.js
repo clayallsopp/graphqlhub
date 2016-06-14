@@ -189,10 +189,10 @@ let IssueType = new GraphQLObjectType({
 
 
 let BranchType = new GraphQLObjectType({
-  name : 'GitBranch',
+  name : 'GithubBranch',
   fields : {
     name : { type : GraphQLString },
-    last_commit: {
+    lastCommit: {
       type: CommitType,
       resolve: (branch) => {
         const { ownerUsername, reponame } = branch; // info has been added while loading
@@ -242,9 +242,9 @@ let RepoType = new GraphQLObjectType({
         const ownerUsername = repo.owner.login;
         const reponame = repo.name;
         return getBranchesForRepo(ownerUsername, reponame).then((branches) => {
-            // add repo referenceData
-            return branches.map( (b) => ({reponame, ownerUsername, ...b}) );
-          }).then((branches) => {
+          // add repo referenceData
+          return branches.map( (b) => ({reponame, ownerUsername, ...b}) );
+        }).then((branches) => {
           if (limit) {
             // Later: optimise query...
             return branches.slice(0, limit);
