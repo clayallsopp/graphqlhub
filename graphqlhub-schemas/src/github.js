@@ -51,7 +51,7 @@ let UserType = new GraphQLObjectType({
 });
 
 let UserOrCommitAuthorType = new GraphQLUnionType({
-  name: 'UserOrStringType',
+  name: 'UserOrCommitAuthor',
   resolveType: (author) => {
     if (isObject(author) && author.login) {
       return UserType;
@@ -102,6 +102,9 @@ let CommitType = new GraphQLObjectType({
       sha : { type : GraphQLString },
       author : {
         type : UserOrCommitAuthorType,
+        resolve(obj) {
+          return obj.author || (obj.commit && obj.commit.author);
+        }        
       },
       message : {
         type : GraphQLString,
