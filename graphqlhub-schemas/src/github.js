@@ -136,19 +136,7 @@ let CommitType = new GraphQLObjectType({
         resolve(commit) {
           const { username, reponame } = grabUsernameAndReponameFromURL(commit.url);
           const { sha } = commit;
-
-          const statusForRepo = getStatusesForRepo(username, reponame, sha)
-              .then((statuses) => {
-                  return statuses.map(status => {
-                      const {
-                          id, url, state, context, description, target_url, updated_at
-                        } = status;
-                      return {
-                          id, url, state, context, description, target_url, updated_at
-                        };
-                  });
-              });
-          return statusForRepo;
+          return getStatusesForRepo(username, reponame, sha);
         }
       },
       tree: {
