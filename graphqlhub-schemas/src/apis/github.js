@@ -134,3 +134,17 @@ export let getTreeForRepo = (username, reponame, tree) => {
     });
   });
 }
+
+export let getStatusesForRepo = (username, reponame, sha) => {
+  return new Promise((resolve, reject) => {
+    github.getRepo(username, reponame)
+    .getStatuses(sha, (err, result) => {
+      if (result) {
+        resolve(result);
+      }
+      else {
+        reject(err);
+      }
+    });
+  });
+}
