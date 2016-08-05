@@ -6,6 +6,7 @@ import {
   getIssuesForRepo,
   getCommentsForIssue,
   getTreeForRepo,
+  getStatusesForRepo,
   getBranchesForRepo,
 } from './apis/github';
 
@@ -29,6 +30,18 @@ let CommitAuthorType = new GraphQLObjectType({
   fields: {
     email : { type : GraphQLString },
     name  : { type : GraphQLString },
+  }
+});
+
+let StatusType = new GraphQLObjectType({
+  name : 'GithubStatus',
+  description : 'Status of a commit',
+  fields: {
+    state : { type : GraphQLString },
+    description : { type : GraphQLString },
+    target_url: { type : GraphQLString },
+    context: { type : GraphQLString },
+    updated_at: { type : GraphQLString }
   }
 });
 
@@ -116,6 +129,14 @@ let CommitType = new GraphQLObjectType({
         type : GraphQLString,
         resolve(commit) {
           return commit.commit && commit.commit.committer.date;
+        }
+      },
+      status : {
+        type : new GraphQLList(StatusType),
+        resolve(commit) {
+          const { username, reponame } = grabUsernameAndReponameFromURL(commit.url);
+          const { sha } = commit;
+          return getStatusesForRepo(username, reponame, sha);
         }
       },
       tree: {
