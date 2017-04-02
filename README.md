@@ -6,7 +6,7 @@
 
 Want to install the various GraphQLHub schemas and use on your own? See [graphqlhub-schemas](./graphqlhub-schemas) for details.
 
-# GraphQLHub Server [![Build Status](https://travis-ci.org/clayallsopp/graphqlhub.svg)](https://travis-ci.org/clayallsopp/graphqlhub)
+# GraphQLHub Server [![Build Status](https://travis-ci.org/clayallsopp/graphqlhub.svg)](https://travis-ci.org/clayallsopp/graphqlhub) [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fclayallsopp%2Fgraphqlhub.svg?size=small)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fclayallsopp%2Fgraphqlhub?ref=badge_small)
 
 This powers the server behind [GraphQLHub](http://www.graphqlhub.com/). It's basically:
 
@@ -45,6 +45,10 @@ npm run start
 
 Then visit [http://localhost:3000](http://localhost:3000) in your browser.
 
+## License
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fclayallsopp%2Fgraphqlhub.svg?size=large)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fclayallsopp%2Fgraphqlhub?ref=badge_large)
+
 ## TODO
 
 - Better visual design
@@ -53,3 +57,5 @@ Then visit [http://localhost:3000](http://localhost:3000) in your browser.
 - Use GraphiQL from NPM, not the vendoring thing done now
 
 PRs for anything above would be excellent!
+
+
