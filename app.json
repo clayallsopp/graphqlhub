@@ -1,0 +1,36 @@
+{
+  "name": "graphqlhub",
+  "description": "GraphQLHub.com",
+  "repository": "https://github.com/clayallsopp/graphqlhub",
+  "keywords": ["graphqlhub", "graphql"],
+  "env": {
+    "GITHUB_TOKEN": {
+      "description": "Optional Key. Github personal token obtained from https://github.com/settings/tokens",
+      "value": "",
+      "required": false
+    },
+    "TWITTER_CONSUMER_KEY": {
+      "description": "Twitter consumer key obtained from https://apps.twitter.com/",
+      "value": ""
+    },
+    "TWITTER_CONSUMER_SECRET": {
+      "description": "Twitter consumer key obtained from https://apps.twitter.com/",
+      "value": ""
+    },
+    "GIPHY_API_KEY": {
+      "description": "Below key is public key. Giphy personal API key can be obtained by submitting form in http://api.giphy.com/submit",
+      "value": "dc6zaTOxFJmzC",
+      "required": true
+    },
+    "KEEN_PROJECT_ID": {
+      "description": "Key obtained from https://keen.io/",
+      "value": "",
+      "required": false
+    },
+    "KEEN_WRITE_KEY": {
+      "description": "Key obtained from https://keen.io/",
+      "value": "",
+      "required": false
+    }
+  }
+}

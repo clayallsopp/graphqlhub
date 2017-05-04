@@ -2,6 +2,10 @@
   <img src="public/images/graphqlhub-logo.png" alt="GraphQLHub Logo" width="305" height="300"/>
 </p>
 
+[![Deploy your own GraphQLHub](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
+Set the API key values in the deploying page under config variables. Only Twitter and Giphy API keys are required, others are optional.
+
 # GraphQLHub Schemas
 
 Want to install the various GraphQLHub schemas and use on your own? See [graphqlhub-schemas](./graphqlhub-schemas) for details.
@@ -57,5 +61,3 @@ Then visit [http://localhost:3000](http://localhost:3000) in your browser.
 - Use GraphiQL from NPM, not the vendoring thing done now
 
 PRs for anything above would be excellent!
-
-
